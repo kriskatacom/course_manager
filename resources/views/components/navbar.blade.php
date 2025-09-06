@@ -4,7 +4,7 @@
 
             <!-- Лого -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="{{ route('home') }}" class="text-2xl font-bold">
+                <a href="{{ route("home") }}" class="text-2xl font-bold">
                     Learnova
                 </a>
             </div>
@@ -38,8 +38,8 @@
             <!-- User actions (desktop) -->
             <div class="hidden md:flex items-center space-x-4">
                 @guest
-                    <a href="{{ route('users.login') }}" class="navbar-link">Вход</a>
-                    <a href="{{ route('users.register') }}" class="navbar-bg-link">Регистрация</a>
+                    <a href="{{ route("users.login") }}" class="navbar-link">Вход</a>
+                    <a href="{{ route("users.register") }}" class="navbar-bg-link">Регистрация</a>
                 @else
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open" class="flex items-center space-x-2 px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100">
@@ -47,10 +47,11 @@
                             <i class="fa-solid fa-chevron-down ml-1"></i>
                         </button>
                         <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-50">
-                            <a href="{{ route('users.profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профил</a>
-                            <form method="POST" action="{{ route('users.logout') }}">
+                            <a href="{{ route("users.profile.show") }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профил</a>
+                            <form method="POST" action="{{ route("users.logout") }}">
                                 @csrf
-                                <button type="submit" class="page-button button-danger">Изход</button>
+                                @method("DELETE")
+                                <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-100 text-left w-full">Изход</button>
                             </form>
                         </div>
                     </div>
@@ -93,13 +94,14 @@
             <a href="#" class="navbar-link">Контакти</a>
 
             @guest
-                <a href="{{ route('users.login') }}" class="navbar-link">Вход</a>
-                <a href="{{ route('users.register') }}" class="page-button button-primary">Регистрация</a>
+                <a href="{{ route("users.login") }}" class="navbar-link">Вход</a>
+                <a href="{{ route("users.register") }}" class="btn-primary button-primary">Регистрация</a>
             @else
-                <a href="{{ route('users.profile.show') }}" class="navbar-link">{{ Auth::user()->name }}</a>
-                <form method="POST" action="{{ route('users.logout') }}">
+                <a href="{{ route("users.profile.show") }}" class="navbar-link">{{ Auth::user()->name }}</a>
+                <form method="POST" action="{{ route("users.logout") }}">
                     @csrf
-                    <button type="submit" class="page-button button-danger">Изход</button>
+                    @method("DELETE")
+                    <button type="submit" class="btn-primary btn-danger">Изход</button>
                 </form>
             @endguest
         </nav>
