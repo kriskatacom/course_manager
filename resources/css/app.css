@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.x-cloak {
+    display: none !important;
+}
+
+.navbar-link {
+    @apply block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary;
+}
+
+.navbar-bg-link {
+    @apply block px-3 py-2 rounded-md text-base font-medium text-white bg-primary hover:bg-blue-700;
+}
+
+.page-button {
+    @apply block px-3 py-2 rounded-md text-base text-white font-medium;
+}
+
+.button-primary {
+    @apply bg-primary hover:bg-blue-700;
+}
+
+.button-danger {
+    @apply bg-red-600 hover:bg-red-700;
+}
+
+.page-icon-button {
+    @apply border border-gray-200 hover:border-primary rounded p-2 flex justify-center items-center hover:text-white hover:bg-primary;
+}
