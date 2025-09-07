@@ -79,4 +79,5 @@ return [
     "saved_changes" => "Saved changes",
     "personal_data" => "Personal data",
     "enter_name" => "Enter full name",
+    "change_email" => "Change email",
 ];
