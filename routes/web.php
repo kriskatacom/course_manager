@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -82,6 +83,20 @@ Route::group([
             Route::get("/{id}/edit", [UserController::class, "edit"])->name("admin.users.edit");
             Route::put("/{id}", [UserController::class, "update"])->name("admin.users.update");
             Route::delete("/{id}", [UserController::class, "destroy"])->name("admin.users.destroy");
+        });
+
+        Route::prefix("roles")->group(function () {
+            Route::get("/", [RoleController::class, "all"])->name("admin.roles.index");
+            Route::get("/{id}/edit", [RoleController::class, "edit"])->name("admin.roles.edit");
+            Route::put("/{id}", [RoleController::class, "update"])->name("admin.roles.update");
+            Route::delete("/{id}", [RoleController::class, "destroy"])->name("admin.roles.destroy");
+        });
+
+        Route::prefix("permissions")->group(function () {
+            Route::get("/", [UserController::class, "all"])->name("admin.permissions.index");
+            Route::get("/{id}/edit", [UserController::class, "edit"])->name("admin.permissions.edit");
+            Route::put("/{id}", [UserController::class, "update"])->name("admin.permissions.update");
+            Route::delete("/{id}", [UserController::class, "destroy"])->name("admin.permissions.destroy");
         });
     });
 });

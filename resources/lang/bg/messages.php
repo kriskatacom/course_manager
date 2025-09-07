@@ -84,4 +84,7 @@ return [
     "change_role" => "Смяна на ролата",
     "select_role" => "Избиране на роля",
     "selected_role_incorrect" => "Избраната роля не съществува.",
+    "permissions" => "Разрешения",
+    "search_role" => "Търсене на роля",
+    "label" => "Лейбъл",
 ];

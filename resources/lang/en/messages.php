@@ -84,4 +84,7 @@ return [
     "change_role" => "Change role",
     "select_role" => "Select role",
     "selected_role_incorrect" => "Selected role does't exists.",
+    "permissions" => "Permissions",
+    "search_role" => "Search role",
+    "label" => "Label",
 ];
