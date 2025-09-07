@@ -41,3 +41,69 @@
 .btn-danger {
     @apply bg-red-600 text-white font-medium py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition disabled:opacity-50;
 }
+
+.roles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.role-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+}
+
+.role-checkbox input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.role-checkbox .checkmark {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 18px;
+    color: white;
+}
+
+.role-checkbox .checkmark i {
+    transform: scale(0);
+    transition: transform 0.2s ease;
+}
+
+.role-checkbox:hover .checkmark {
+    border-color: #3b82f6;
+}
+
+.role-checkbox input:checked + .checkmark {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    transform: scale(1.05);
+}
+
+.role-checkbox input:checked + .checkmark i {
+    transform: scale(1);
+}
+
+.role-checkbox .role-text {
+    font-weight: 500;
+    color: #374151;
+    transition: color 0.3s ease;
+}
+
+.role-checkbox input:checked ~ .role-text {
+    color: #3b82f6;
+}

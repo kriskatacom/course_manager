@@ -70,22 +70,25 @@
             </div>
         </div>
     </form>
-    <form wire:submit.prevent="updateRole" class="border border-gray-200 rounded shadow">
+    <form wire:submit.prevent="updateRoles" class="border border-gray-200 rounded shadow">
         <h2 class="text-xl font-semibold border-b border-gray-200 p-5">{{ __("messages.change_role") }}</h2>
 
         <div class="space-y-5 p-5">
-            <div>
-                <label for="role" class="form-label">{{ __("messages.role") }}</label>
-                <select id="role" wire:model.defer="role" class="form-control">
-                    <option value="">{{ __("messages.select_role") }}</option>
-                    @foreach($roles as $r)
-                        <option value="{{ $r->name }}" {{ $user->hasRole($r->name) ? 'selected' : '' }}>
-                            {{ __("messages." . $r->name) }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('role') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+            <div class="roles-container">
+                @foreach($roles as $r)
+                    <label class="role-checkbox">
+                        <input type="checkbox" wire:model.defer="selectedRoles" value="{{ $r->name }}">
+                        <span class="checkmark">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="role-text">{{ __("messages." . $r->name) }}</span>
+                    </label>
+                @endforeach
             </div>
+
+            @error('selectedRoles')
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
 
             <div>
                 <button type="submit" class="btn-primary px-4 py-2">

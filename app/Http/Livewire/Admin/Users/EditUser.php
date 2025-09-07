@@ -16,7 +16,7 @@ class EditUser extends Component
     public $currentPassword;
     public $newPassword;
     public $newPassword_confirmation;
-    public $role;
+    public $selectedRoles = [];
 
     protected $rules = [
         "user.name" => "required|string|max:255",
@@ -43,7 +43,7 @@ class EditUser extends Component
     {
         $this->user = User::findOrFail($userId);
         $this->roles = Role::all();
-        $this->role = $this->user->roles->first()?->name ?? null;
+        $this->selectedRoles = $this->user->roles->pluck('name')->toArray();
     }
 
     public function personalDataUpdate()
@@ -93,25 +93,14 @@ class EditUser extends Component
         return redirect()->route("admin.users.edit", $this->user->id);
     }
 
-    public function updateRole()
+    public function updateRoles()
     {
-        if (empty($this->role)) {
-            $this->user->roles()->sync([]);
-            session()->flash('success', __('messages.saved_changes'));
-            return redirect()->route("admin.users.edit", $this->user->id);
-        }
+        $roleIds = Role::whereIn('name', $this->selectedRoles)->pluck('id')->toArray();
 
-        $role = Role::where('name', $this->role)->first();
-
-        if (!$role) {
-            $this->addError('role', __("messages.selected_role_incorrect"));
-            return;
-        }
-
-        $this->user->roles()->sync([$role->id]);
+        $this->user->roles()->sync($roleIds);
 
         session()->flash('success', __('messages.saved_changes'));
-        return redirect()->route("admin.users.edit", $this->user->id);
+        return redirect()->route('admin.users.edit', $this->user->id);
     }
 
     public function render()
