@@ -27,5 +27,7 @@ Route::group([
     
     Route::group(["prefix" => "users"], function () {
         Route::get("/", [UserController::class, "all"])->name("admin.users.index");
+        
+        Route::get("/{id}/edit", [UserController::class, "edit"])->name("admin.users.edit");
     });
 });

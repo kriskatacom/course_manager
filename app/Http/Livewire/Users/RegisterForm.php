@@ -54,6 +54,11 @@ class RegisterForm extends Component
             $user->roles()->attach($adminRole);
         }
 
+        $userRole = Role::where("name", "user")->first();
+        if ($userRole) {
+            $user->roles()->attach($userRole);
+        }
+
         auth()->login($user);
 
         session()->flash("success", "Регистрацията е успешна!");
