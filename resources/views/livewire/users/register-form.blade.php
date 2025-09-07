@@ -35,11 +35,6 @@
                 <i class="fas fa-sign-in-alt"></i>
                 <span>Влизане в профила</span>
             </a>
-            <a href="{{ route('users.forgot') }}" class="page-link flex items-center space-x-2"
-                title="Забравена парола">
-                <i class="fas fa-unlock-alt"></i>
-                <span>Забравена парола</span>
-            </a>
         </div>
 
         <button type="submit" class="btn-primary w-full flex justify-center items-center space-x-2" wire:loading.attr="disabled">
