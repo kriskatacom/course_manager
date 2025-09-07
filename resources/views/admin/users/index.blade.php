@@ -10,7 +10,7 @@
                 <span>({{ format_number($usersCount) }})</span>
             </h1>
             
-            <div class="mx-5 mt-5">
+            <div class="mt-5">
                 <x-alert-messages />
             </div>
             <livewire:admin.users.users-table />

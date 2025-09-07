@@ -1,7 +1,7 @@
 <div>
     <div class="m-5 flex justify-between items-center">
         <input type="text" wire:model.debounce.300ms="search" placeholder="{{ __("messages.search_user") }}..."
-               class="form-control">
+            class="form-control">
         <select wire:model="perPage" class="px-4 py-2 border rounded ml-5">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -44,15 +44,39 @@
                             <a href="{{ route('admin.users.edit', $user->id) }}" class="text-blue-600 hover:underline">
                                 {{ __("messages.edit") }}
                             </a>
-                            <button wire:click="delete({{ $user->id }})" class="text-red-600 hover:underline ml-2" onclick="confirm('Сигурни ли сте, че искате да изтриете потребителя?') || event.stopImmediatePropagation()">
-                                {{ __("messages.delete") }}
-                            </button>
+                            @if (Auth::user()->id != $user->id && !$user->hasRole("admin"))
+                                <button wire:click="confirmDelete({{ $user->id }})" class="text-red-600 ml-2">Изтрий</button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    @if($showDeleteModal)
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded shadow-lg w-1/3">
+                <h2 class="p-5 text-xl font-semibold pb-5 border-b border-gray-200">Потвърждение за изтриване</h2>
+                <p class="p-5">
+                    Сигурни ли сте, че искате да изтриете <strong>{{ $userToDelete->name }}</strong>?
+                </p>
+
+                <div class="p-5 border-t border-gray-200 flex justify-end space-x-5">
+                    <button wire:click="cancelDelete" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                        Откажи
+                    </button>
+
+                    <button wire:click="deleteUser" wire:loading.attr="disabled" class="btn-danger">
+                        <span wire:loading.remove>Изтрий</span>
+                        <span wire:loading>
+                            <i class="fas fa-spinner fa-spin"></i> Зареждане...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 
     @if ($users->hasPages())
         <div class="p-5">

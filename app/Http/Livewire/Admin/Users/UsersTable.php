@@ -12,12 +12,36 @@ class UsersTable extends Component
 
     public $search = "";
     public $perPage = 10;
+    public $showDeleteModal = false;
+    public $userToDelete;
 
     protected $paginationTheme = "tailwind";
 
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function confirmDelete($userId)
+    {
+        $this->userToDelete = User::findOrFail($userId);
+        $this->showDeleteModal = true;
+    }
+
+    public function cancelDelete()
+    {
+        $this->userToDelete = null;
+        $this->showDeleteModal = false;
+    }
+
+    public function deleteUser()
+    {
+        if ($this->userToDelete) {
+            $this->userToDelete->delete();
+            session()->flash('success', 'Потребителят е изтрит успешно.');
+            $this->cancelDelete();
+            $this->render();
+        }
     }
 
     public function render()
