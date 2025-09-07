@@ -54,7 +54,9 @@
         </table>
     </div>
 
-    <div class="mt-4">
-        {{ $users->links() }}
-    </div>
+    @if ($users->hasPages())
+        <div class="p-5">
+            {{ $users->links() }}
+        </div>
+    @endif
 </div>

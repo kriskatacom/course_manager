@@ -22,14 +22,20 @@ class UsersTable extends Component
 
     public function render()
     {
-        $users = User::with("roles")
-            ->where("name", "like", "%" . $this->search . "%")
-            ->orWhere("email", "like", "%" . $this->search . "%")
-            ->orderBy("id", "desc")
-            ->paginate($this->perPage);
+        $query = User::with('roles')
+            ->orderBy('id', 'desc');
 
-        return view("livewire.admin.users.users-table", [
-            "users" => $users,
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%");
+            });
+        }
+
+        $users = $query->paginate($this->perPage);
+
+        return view('livewire.admin.users.users-table', [
+            'users' => $users,
         ]);
     }
 }
