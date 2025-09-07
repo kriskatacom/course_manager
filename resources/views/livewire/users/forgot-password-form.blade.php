@@ -1,21 +1,5 @@
 <div class="max-w-md mx-auto p-6 bg-white border border-gray-200 shadow rounded-lg">
-    @if (session()->has('success'))
-        <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session()->has('error'))
-        <div class="bg-green-100 text-red-800 p-3 mb-4 rounded">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    @if (session()->has('message'))
-        <div class="bg-green-100 text-blue-800 p-3 mb-4 rounded">
-            {{ session('message') }}
-        </div>
-    @endif
+    <x-alert-messages />
 
     <form wire:submit.prevent="sendResetLink" class="space-y-4">
         <div>

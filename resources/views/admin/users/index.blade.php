@@ -11,7 +11,7 @@
             </h1>
             
             <div class="mx-5 mt-5">
-                <livewire:admin.alert-messages />
+                <x-alert-messages />
             </div>
             <livewire:admin.users.users-table />
         </div>

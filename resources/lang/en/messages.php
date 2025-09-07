@@ -77,4 +77,6 @@ return [
     "user_details" => "User details",
     "save_changes" => "Save changes",
     "saved_changes" => "Saved changes",
+    "personal_data" => "Personal data",
+    "enter_name" => "Enter full name",
 ];

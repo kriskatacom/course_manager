@@ -1,19 +1,5 @@
 <div class="max-w-md mx-auto p-6 bg-white rounded shadow">
-    @if (session()->has("message"))
-        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-            {{ session("message") }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-            <ul class="list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <x-alert-messages />
 
     <form wire:submit.prevent="resetPassword" class="space-y-4">
         <div>
