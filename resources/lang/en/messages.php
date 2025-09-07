@@ -87,4 +87,6 @@ return [
     "permissions" => "Permissions",
     "search_role" => "Search role",
     "label" => "Label",
+    "access-admin" => "Administration access",
+    "search_permission" => "Search permission",
 ];

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -93,10 +94,10 @@ Route::group([
         });
 
         Route::prefix("permissions")->group(function () {
-            Route::get("/", [UserController::class, "all"])->name("admin.permissions.index");
-            Route::get("/{id}/edit", [UserController::class, "edit"])->name("admin.permissions.edit");
-            Route::put("/{id}", [UserController::class, "update"])->name("admin.permissions.update");
-            Route::delete("/{id}", [UserController::class, "destroy"])->name("admin.permissions.destroy");
+            Route::get("/", [PermissionController::class, "all"])->name("admin.permissions.index");
+            Route::get("/{id}/edit", [PermissionController::class, "edit"])->name("admin.permissions.edit");
+            Route::put("/{id}", [PermissionController::class, "update"])->name("admin.permissions.update");
+            Route::delete("/{id}", [PermissionController::class, "destroy"])->name("admin.permissions.destroy");
         });
     });
 });

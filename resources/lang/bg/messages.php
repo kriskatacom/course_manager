@@ -87,4 +87,6 @@ return [
     "permissions" => "Разрешения",
     "search_role" => "Търсене на роля",
     "label" => "Лейбъл",
+    "access-admin" => "Администраторски достъп",
+    "search_permission" => "Търсене на разрешение",
 ];
