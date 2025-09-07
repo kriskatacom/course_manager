@@ -41,7 +41,7 @@
                     <a href="{{ route("users.login") }}" class="navbar-link">Вход</a>
                     <a href="{{ route("users.register") }}" class="navbar-bg-link">Регистрация</a>
                 @else
-                    <div x-data="{ open: false }" class="relative">
+                    <div x-data="{ open: false }" class="relative" x-cloak>
                         <button @click="open = !open" class="flex items-center space-x-2 px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100">
                             {{ Auth::user()->name }}
                             <i class="fa-solid fa-chevron-down ml-1"></i>

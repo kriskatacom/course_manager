@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body x-transition>
+<body class="bg-gray-100">
     <x-navbar />
 
     <main>

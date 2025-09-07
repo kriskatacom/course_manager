@@ -24,4 +24,8 @@ Route::group([
     "middleware" => ["auth", "can:access-admin"]
 ], function () {
     Route::get("/dashboard", [AdminController::class, "dashboard"])->name("admin.dashboard");
+    
+    Route::group(["prefix" => "users"], function () {
+        Route::get("/", [UserController::class, "all"])->name("admin.users.index");
+    });
 });

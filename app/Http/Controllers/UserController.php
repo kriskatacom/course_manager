@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -50,23 +51,23 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
         $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            "token" => "required",
+            "email" => "required|email",
+            "password" => "required|min:8|confirmed",
         ], [
-            'email.required' => 'Моля, въведете имейл адрес.',
-            'email.email' => 'Въведеният имейл е невалиден.',
-            'password.required' => 'Моля, въведете нова парола.',
-            'password.min' => 'Паролата трябва да съдържа поне 8 символа.',
-            'password.confirmed' => 'Паролите не съвпадат.',
+            "email.required" => "Моля, въведете имейл адрес.",
+            "email.email" => "Въведеният имейл е невалиден.",
+            "password.required" => "Моля, въведете нова парола.",
+            "password.min" => "Паролата трябва да съдържа поне 8 символа.",
+            "password.confirmed" => "Паролите не съвпадат.",
         ]);
 
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $request->only("email", "password", "password_confirmation", "token"),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password),
-                    'remember_token' => Str::random(60),
+                    "password" => Hash::make($password),
+                    "remember_token" => Str::random(60),
                 ])->save();
 
                 event(new PasswordReset($user));
@@ -74,8 +75,8 @@ class UserController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('users.login')->with('success', 'Паролата беше сменена успешно. Моля, влезте с новата парола.')
-            : back()->with('error', 'Възникна проблем при смяната на паролата. Опитайте отново.');
+            ? redirect()->route("users.login")->with("success", "Паролата беше сменена успешно. Моля, влезте с новата парола.")
+            : back()->with("error", "Възникна проблем при смяната на паролата. Опитайте отново.");
     }
 
     public function profile()
@@ -90,5 +91,13 @@ class UserController extends Controller
         session()->regenerateToken();
 
         return redirect()->route("users.login");
+    }
+
+    public function all()
+    {
+        $users = User::with("roles")->paginate(10);
+        $usersCount = User::count();
+        
+        return view("admin.users.index", compact("users", "usersCount"));
     }
 }
