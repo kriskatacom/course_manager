@@ -43,6 +43,7 @@ return [
     "password_min_length" => "The password must contain at least 8 characters.",
     "passwords_not_match" => "Passwords do not match.",
     "password_changed" => "Password changed successfully. Please log in with your new password.",
+    "password_updated_successfully" => "Password changed successfully.",
     "password_change_failed" => "There was a problem changing the password. Please try again.",
 
     // Login
@@ -69,4 +70,11 @@ return [
     "user_not_found" => "We can’t find a user with that email.",
     "reset_link_sent" => "We have emailed you a password reset link.",
     "reset_link_failed" => "We couldn’t send the reset link. Please try again.",
+    "current_password_incorrect" => "The current password is incorrect.",
+    
+    // admin
+    "user_id_not_found" => "This user doesn't exists.",
+    "user_details" => "User details",
+    "save_changes" => "Save changes",
+    "saved_changes" => "Saved changes",
 ];

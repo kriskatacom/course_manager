@@ -92,11 +92,21 @@ class UserController extends Controller
         return redirect()->route("users.login");
     }
 
+    // admin methods
     public function all()
     {
-        $users = User::with("roles")->paginate(10);
         $usersCount = User::count();
+        return view("admin.users.index", compact("usersCount"));
+    }
 
-        return view("admin.users.index", compact("users", "usersCount"));
+    public function edit($locale, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route("admin.users.index")->with("error",__("messages.user_id_not_found"));
+        }
+
+        return view("admin.users.edit", compact("user"));
     }
 }
