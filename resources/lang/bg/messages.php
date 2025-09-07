@@ -81,4 +81,7 @@ return [
     "enter_name" => "Въведете име и фамилия",
     "change_email" => "Промяна на имейл",
     "change_password" => "Промяна на парола",
+    "change_role" => "Смяна на ролата",
+    "select_role" => "Избиране на роля",
+    "selected_role_incorrect" => "Избраната роля не съществува.",
 ];

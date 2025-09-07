@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Users;
 
+use App\Models\Role;
 use Auth;
 use Hash;
 use Livewire\Component;
@@ -10,10 +11,12 @@ use App\Models\User;
 class EditUser extends Component
 {
     public $user;
+    public $roles;
     public $newEmail;
     public $currentPassword;
     public $newPassword;
     public $newPassword_confirmation;
+    public $role;
 
     protected $rules = [
         "user.name" => "required|string|max:255",
@@ -39,6 +42,8 @@ class EditUser extends Component
     public function mount($userId)
     {
         $this->user = User::findOrFail($userId);
+        $this->roles = Role::all();
+        $this->role = $this->user->roles->first()?->name ?? null;
     }
 
     public function personalDataUpdate()
@@ -85,6 +90,27 @@ class EditUser extends Component
         $this->user->save();
 
         session()->flash("success", __("messages.saved_changes"));
+        return redirect()->route("admin.users.edit", $this->user->id);
+    }
+
+    public function updateRole()
+    {
+        if (empty($this->role)) {
+            $this->user->roles()->sync([]);
+            session()->flash('success', __('messages.saved_changes'));
+            return redirect()->route("admin.users.edit", $this->user->id);
+        }
+
+        $role = Role::where('name', $this->role)->first();
+
+        if (!$role) {
+            $this->addError('role', __("messages.selected_role_incorrect"));
+            return;
+        }
+
+        $this->user->roles()->sync([$role->id]);
+
+        session()->flash('success', __('messages.saved_changes'));
         return redirect()->route("admin.users.edit", $this->user->id);
     }
 

@@ -81,4 +81,7 @@ return [
     "enter_name" => "Enter full name",
     "change_email" => "Change email",
     "change_password" => "Change password",
+    "change_role" => "Change role",
+    "select_role" => "Select role",
+    "selected_role_incorrect" => "Selected role does't exists.",
 ];
