@@ -18,3 +18,9 @@ if (!function_exists('format_number')) {
         return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
 }
+
+function locale_route($name, $parameters = [])
+{
+    $parameters = array_merge(['locale' => app()->getLocale()], $parameters);
+    return route($name, $parameters);
+}

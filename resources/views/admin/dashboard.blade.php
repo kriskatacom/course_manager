@@ -8,7 +8,7 @@
             <h1 class="text-2xl font-extrabold border-b border-gray-200 p-5">Табло</h1>
 
             <ul class="p-5 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                <x-admin.dashboard.sidebar-item title="Потребители" :count="$usersCount" icon="fa-solid fa-users" :route="route('admin.users.index')" />
+                <x-admin.dashboard.sidebar-item title="{{ __('messages.administration') }}" :count="$usersCount" icon="fa-solid fa-users" :route="route('admin.users.index')" />
             </ul>
         </div>
     </div>

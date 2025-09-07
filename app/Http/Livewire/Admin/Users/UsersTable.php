@@ -11,7 +11,7 @@ class UsersTable extends Component
     use WithPagination;
 
     public $search = "";
-    public $perPage = 10;
+    public $perPage = 2;
 
     protected $paginationTheme = "tailwind";
 

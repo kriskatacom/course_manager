@@ -29,16 +29,15 @@ class UserController extends Controller
         return view("users.forgot-password");
     }
 
-    public function resetPassword(Request $request, $token)
+    public function resetPassword($locale, $token, $email)
     {
-        $email = $request->email;
-
         $reset = DB::table("password_resets")
             ->where("email", $email)
             ->first();
 
         if (!$reset || !Hash::check($token, $reset->token) || Carbon::parse($reset->created_at)->addMinutes(60)->isPast()) {
-            return redirect("users.login")->with("error", "Този линк вече е невалиден. Моля, поискайте нов.");
+            return redirect()->route("users.login")
+                ->with("error", "Този линк вече е невалиден. Моля, поискайте нов.");
         }
 
         return view("users.reset-password", [
@@ -97,7 +96,7 @@ class UserController extends Controller
     {
         $users = User::with("roles")->paginate(10);
         $usersCount = User::count();
-        
+
         return view("admin.users.index", compact("users", "usersCount"));
     }
 }

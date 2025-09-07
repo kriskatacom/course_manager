@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Users;
 
-use Illuminate\Support\Facades\Password;
+use DB;
+use Hash;
 use Livewire\Component;
-use Throwable;
+use App\Notifications\ResetPasswordCustom;
+use Str;
 
 class ForgotPasswordForm extends Component
 {
@@ -24,13 +26,34 @@ class ForgotPasswordForm extends Component
     {
         $this->validate();
 
-        $status = Password::sendResetLink(['email' => $this->email]);
+        $user = \App\Models\User::where('email', $this->email)->first();
 
-        if ($status === Password::RESET_LINK_SENT) {
-            session()->flash("message", "Изпратихме ви имейл с линк за смяна на паролата.");
-        } else {
-            session()->flash("error", "Не успяхме да изпратим линк. Опитайте отново.");
+        if (!$user) {
+            session()->flash("error", "Не откриваме потребител с такъв имейл.");
+            return;
         }
+
+        // Генериране на токен
+        $token = Str::random(64);
+
+        // Запис в базата
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $user->email],
+            [
+                'token' => Hash::make($token),
+                'created_at' => now()
+            ]
+        );
+
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $user->email,
+            'locale' => app()->getLocale()
+        ], false));
+
+        $user->notify(new ResetPasswordCustom($url));
+
+        session()->flash("message", "Изпратихме ви имейл с линк за смяна на паролата.");
     }
 
     public function render()
