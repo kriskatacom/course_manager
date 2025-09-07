@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
+use App\Models\Role;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -47,6 +48,11 @@ class RegisterForm extends Component
             "email" => $validatedData["email"],
             "password" => Hash::make($validatedData["password"]),
         ]);
+
+        if (User::count() === 1) {
+            $adminRole = Role::firstOrCreate(["name" => "admin"], ["label" => "Администратор"]);
+            $user->roles()->attach($adminRole);
+        }
 
         auth()->login($user);
 

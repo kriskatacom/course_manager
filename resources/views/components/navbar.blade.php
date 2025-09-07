@@ -47,7 +47,12 @@
                             <i class="fa-solid fa-chevron-down ml-1"></i>
                         </button>
                         <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-50">
+                            @if(auth()->check() && auth()->user()->hasPermission('access-admin'))
+                                <a href="{{ route("admin.dashboard") }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Администрация</a>
+                            @endif
+
                             <a href="{{ route("users.profile.show") }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профил</a>
+                            
                             <form method="POST" action="{{ route("users.logout") }}">
                                 @csrf
                                 @method("DELETE")
@@ -97,7 +102,12 @@
                 <a href="{{ route("users.login") }}" class="navbar-link">Вход</a>
                 <a href="{{ route("users.register") }}" class="btn-primary button-primary">Регистрация</a>
             @else
-                <a href="{{ route("users.profile.show") }}" class="navbar-link">{{ Auth::user()->name }}</a>
+            <a href="{{ route("users.profile.show") }}" class="navbar-link">{{ Auth::user()->name }}</a>
+            
+                @if(auth()->check() && auth()->user()->hasPermission('access-admin'))
+                    <a href="{{ route("admin.dashboard") }}" class="navbar-link">Администрация</a>
+                @endif
+
                 <form method="POST" action="{{ route("users.logout") }}">
                     @csrf
                     @method("DELETE")
