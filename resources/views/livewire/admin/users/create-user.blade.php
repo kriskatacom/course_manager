@@ -35,12 +35,9 @@
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
 
-            <div class="space-x-5">
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
-                <a href="{{ route("admin.users.index") }}" class="page-link">{{ __("messages.back") }}</a>
-            </div>
+            <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
+                {{ __('messages.save_changes') }}
+            </x-button-loading>
         </div>
     </form>
 </div>

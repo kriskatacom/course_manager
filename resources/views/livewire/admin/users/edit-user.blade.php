@@ -10,11 +10,9 @@
                 @error('user.name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <div>
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
-            </div>
+            <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2 w-fit">
+                {{ __('messages.save_changes') }}
+            </x-button-loading>
         </div>
     </form>
     <form wire:submit.prevent="updateEmail" class="border border-gray-200 rounded shadow">
@@ -32,11 +30,9 @@
                 @error('newEmail') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <div>
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
-            </div>
+            <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2 w-fit">
+                {{ __('messages.save_changes') }}
+            </x-button-loading>
         </div>
     </form>
     <form wire:submit.prevent="updatePassword" class="border border-gray-200 rounded shadow">
@@ -63,11 +59,9 @@
                     class="form-control">
             </div>
 
-            <div>
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
-            </div>
+            <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2 w-fit">
+                {{ __('messages.save_changes') }}
+            </x-button-loading>
         </div>
     </form>
     <form wire:submit.prevent="updateRoles" class="border border-gray-200 rounded shadow">
@@ -90,11 +84,9 @@
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
 
-            <div>
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
-            </div>
+            <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2 w-fit">
+                {{ __('messages.save_changes') }}
+            </x-button-loading>
         </div>
     </form>
 </div>

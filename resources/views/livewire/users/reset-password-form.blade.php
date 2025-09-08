@@ -21,17 +21,8 @@
 
         <input type="hidden" wire:model.defer="token" value="{{ request()->route('token') }}">
 
-        <div class="flex justify-end">
-            <button type="submit" class="btn-primary w-full flex justify-center items-center space-x-2"
-                wire:loading.attr="disabled">
-                <span wire:loading.remove class="flex items-center space-x-2">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Смяна на паролата</span>
-                </span>
-                <span wire:loading class="flex items-center justify-center">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </span>
-            </button>
-        </div>
+        <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
+            {{ __('messages.change_password') }}
+        </x-button-loading>
     </form>
 </div>

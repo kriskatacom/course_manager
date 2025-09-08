@@ -8,16 +8,8 @@
             @error('email') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <button type="submit"
-                class="btn-primary w-full flex justify-center items-center space-x-2"
-                wire:loading.attr="disabled">
-            <span wire:loading.remove class="flex items-center space-x-2">
-                <i class="fas fa-sign-in-alt"></i>
-                <span>{{ __("messages.send_link") }}</span>
-            </span>
-            <span wire:loading class="flex items-center justify-center">
-                <i class="fas fa-spinner fa-spin"></i>
-            </span>
-        </button>
+        <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
+            {{ __('messages.send_link') }}
+        </x-button-loading>
     </form>
 </div>

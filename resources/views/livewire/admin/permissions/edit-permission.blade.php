@@ -33,10 +33,10 @@
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
 
-            <div class="space-x-5">
-                <button type="submit" class="btn-primary px-4 py-2">
-                    {{ __("messages.save_changes") }}
-                </button>
+            <div class="space-x-5 flex items-center">
+                <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2 w-fit">
+                    {{ __('messages.save_changes') }}
+                </x-button-loading>
                 <a href="{{ route("admin.permissions.index") }}" class="page-link">
                     {{ __("messages.back") }}
                 </a>

@@ -3,44 +3,37 @@
 
     <form wire:submit.prevent="register" class="space-y-4">
         <div>
-            <label for="name" class="form-label">Име</label>
+            <label for="name" class="form-label">{{ __("messages.name") }}</label>
             <input type="text" id="name" wire:model.defer="name" class="form-control @error('name') border-red-500 @enderror" wire:loading.attr="disabled" wire:target="register">
             @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <label for="email" class="form-label">Имейл</label>
+            <label for="email" class="form-label">{{ __("messages.email") }}</label>
             <input type="email" id="email" wire:model.defer="email" class="form-control @error('email') border-red-500 @enderror" wire:loading.attr="disabled" wire:target="register">
             @error('email') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <label for="password" class="form-label">Парола</label>
+            <label for="password" class="form-label">{{ __("messages.password") }}</label>
             <input type="password" id="password" wire:model.defer="password" class="form-control @error('password') border-red-500 @enderror" wire:loading.attr="disabled" wire:target="register">
             @error('password') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <label for="password_confirmation" class="form-label">Повтори паролата</label>
+            <label for="password_confirmation" class="form-label">{{ __("messages.repeat_password") }}</label>
             <input type="password" id="password_confirmation" wire:model.defer="password_confirmation" wire:loading.attr="disabled" wire:target="register" class="form-control">
         </div>
 
         <div class="space-y-1">
-            <a href="{{ route('users.login') }}" class="page-link flex items-center space-x-2"
-                title="Влизане в профила">
+            <a href="{{ route('users.login') }}" class="page-link flex items-center space-x-2" title="{{ __("messages.login") }}">
                 <i class="fas fa-sign-in-alt"></i>
-                <span>Влизане в профила</span>
+                <span>{{ __("messages.login") }}</span>
             </a>
         </div>
 
-        <button type="submit" class="btn-primary w-full flex justify-center items-center space-x-2" wire:loading.attr="disabled">
-            <span wire:loading.remove>
-                <i class="fas fa-user-plus"></i>
-                <span>Създаване</span>
-            </span>
-            <span wire:loading class="flex items-center justify-center">
-                <i class="fas fa-spinner fa-spin"></i>
-            </span>
-        </button>
+        <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
+            {{ __('messages.register') }}
+        </x-button-loading>
     </form>
 </div>
