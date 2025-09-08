@@ -21,4 +21,31 @@
             </div>
         </div>
     </form>
+    <form wire:submit.prevent="savePermissions" class="border border-gray-200 rounded shadow">
+        <h2 class="text-xl font-semibold mx-5 mt-5">{{ __("messages.permissions") }}</h2>
+        <div class="space-y-5 p-5">
+            <div class="roles-container flex-col">
+                @foreach($permissions as $permission)
+                    <label class="role-checkbox">
+                        <input type="checkbox" wire:model.defer="selectedPermissions" value="{{ $permission->id }}">
+                        <span class="checkmark">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="role-text">{{ $permission->label }}</span>
+                    </label>
+                @endforeach
+            </div>
+
+            @error('selectedPermissions')
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
+
+            <div class="space-x-5">
+                <button type="submit" class="btn-primary px-4 py-2">
+                    {{ __("messages.save_changes") }}
+                </button>
+                <a href="{{ route("admin.roles.index") }}" class="page-link">{{ __("messages.back") }}</a>
+            </div>
+        </div>
+    </form>
 </div>
