@@ -82,7 +82,7 @@
 
     @if ($users->hasPages())
         <div class="p-5">
-            {{ $users->links() }}
+            {{ $users->links('livewire.components.pagination') }}
         </div>
     @endif
 </div>

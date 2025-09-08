@@ -43,7 +43,7 @@
 
     @if ($permissions->hasPages())
         <div class="p-5">
-            {{ $permissions->links() }}
+            {{ $permissions->links('livewire.components.pagination') }}
         </div>
     @endif
 </div>

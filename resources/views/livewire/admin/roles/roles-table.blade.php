@@ -43,7 +43,7 @@
 
     @if ($roles->hasPages())
         <div class="p-5">
-            {{ $roles->links() }}
+            {{ $roles->links('livewire.components.pagination') }}
         </div>
     @endif
 </div>
