@@ -22,10 +22,10 @@ class LoginForm extends Component
     protected function messages()
     {
         return [
-            "email.required" => "Моля, въведете имейл.",
-            "email.email" => "Моля, въведете валиден имейл.",
-            "password.required" => "Моля, въведете парола.",
-            "password.min" => "Паролата трябва да е поне :min символа.",
+            "email.required" => __("messages.validation_email_required"),
+            "email.email" => __("messages.validation_email_email"),
+            "password.required" => __("messages.validation_password_required"),
+            "password.min" => __("messages.validation_password_min"),
         ];
     }
 
@@ -42,7 +42,7 @@ class LoginForm extends Component
             session()->regenerate();
             return redirect()->route("home");
         } else {
-            $this->addError("email", "Невалиден имейл или парола.");
+            $this->addError("email", __("messages.invalid_email_or_password"));
         }
     }
 

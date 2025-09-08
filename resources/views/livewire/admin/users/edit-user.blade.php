@@ -4,7 +4,7 @@
 
         <div class="space-y-5 p-5">
             <div>
-                <label for="name" class="form-label">Име и фамилия</label>
+                <label for="name" class="form-label">{{ __("messages.name") }}</label>
                 <input type="text" wire:model.defer="user.name" class="form-control"
                     placeholder="{{ __("messages.enter_name") }}">
                 @error('user.name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -22,12 +22,12 @@
 
         <div class="space-y-5 p-5">
             <div>
-                <label for="email" class="form-label">Текущ имейл</label>
+                <label for="email" class="form-label">{{ __("messages.current_email") }}</label>
                 <input type="email" value="{{ $user->email }}" disabled="true" class="form-control">
             </div>
 
             <div>
-                <label for="newEmail" class="form-label">Нов имейл</label>
+                <label for="newEmail" class="form-label">{{ __("messages.new_email") }}</label>
                 <input type="email" wire:model.defer="newEmail" class="form-control">
                 @error('newEmail') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
@@ -45,7 +45,7 @@
         <div class="space-y-5 p-5">
             @if (Auth::user()->id == $user->id)
                 <div>
-                    <label for="currentPassword" class="form-label">Текуща парола</label>
+                    <label for="currentPassword" class="form-label">{{ __("messages.current_password") }}</label>
                     <input type="password" wire:model.defer="currentPassword" class="form-control">
                     @error('currentPassword') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>

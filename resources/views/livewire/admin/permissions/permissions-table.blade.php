@@ -27,7 +27,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 border-b">{{ $permission->id }}</td>
                         <td class="px-6 py-4 border-b">{{ $permission->name }}</td>
-                        <td class="px-6 py-4 border-b">{{ __("messages." . $permission->name) }}</td>
+                        <td class="px-6 py-4 border-b">{{ $permission->label }}</td>
                         <td class="px-6 py-4 border-b">{{ $permission->created_at->diffForHumans() }}</td>
                         <td class="px-6 py-4 border-b">{{ $permission->updated_at->diffForHumans() }}</td>
                         <td class="px-6 py-4 border-b">

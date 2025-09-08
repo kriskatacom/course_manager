@@ -21,7 +21,7 @@ class RoleController extends Controller
 
             if (!$role) {
                 return redirect()->route("admin.roles.index")
-                    ->with("error", __("messages.record_not_found"));
+                    ->with("error", __("messages.selected_role_incorrect"));
             }
         }
 

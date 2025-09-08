@@ -38,7 +38,7 @@ class UsersTable extends Component
     {
         if ($this->userToDelete) {
             $this->userToDelete->delete();
-            session()->flash('success', 'Потребителят е изтрит успешно.');
+            session()->flash('success', __("messages.user_deleted"));
             $this->cancelDelete();
             $this->render();
         }

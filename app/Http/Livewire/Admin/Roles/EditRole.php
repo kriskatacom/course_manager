@@ -16,11 +16,11 @@ class EditRole extends Component
     {
         return [
             'name.required' => __('messages.role_name_required'),
-            'name.string' => __('messages.role_name_string'),
-            'name.max' => __('messages.role_name_max'),
-            'name.unique' => __('messages.role_name_unique'),
-            'label.string' => __('messages.role_label_string'),
-            'label.max' => __('messages.role_label_max'),
+            'name.string'   => __('messages.role_name_string'),
+            'name.max'      => __('messages.role_name_max'),
+            'name.unique'   => __('messages.role_name_unique'),
+            'label.string'  => __('messages.role_label_string'),
+            'label.max'     => __('messages.role_label_max'),
         ];
     }
 

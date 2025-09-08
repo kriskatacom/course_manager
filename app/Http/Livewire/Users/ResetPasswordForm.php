@@ -21,6 +21,19 @@ class ResetPasswordForm extends Component
         'token' => 'required|string',
     ];
 
+    protected function messages()
+    {
+        return [
+            'email.required' => __('messages.validation_email_required'),
+            'email.email' => __('messages.validation_email_email'),
+            'email.exists' => __('messages.validation_email_exists'),
+            'password.required' => __('messages.validation_password_required'),
+            'password.min' => __('messages.validation_password_min'),
+            'password.confirmed' => __('messages.validation_password_confirmed'),
+            'token.required' => __('messages.validation_token_required'),
+        ];
+    }
+
     public function resetPassword()
     {
         $validatedData = $this->validate();
@@ -36,11 +49,11 @@ class ResetPasswordForm extends Component
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            session()->flash('message', 'Паролата беше сменена успешно.');
+            session()->flash('message', __('messages.password_reset_success'));
             return redirect()->route('users.login');
         } else {
             throw ValidationException::withMessages([
-                'email' => ['Невалиден токен или имейл. Опитайте отново.'],
+                'email' => [__('messages.password_reset_error')],
             ]);
         }
     }

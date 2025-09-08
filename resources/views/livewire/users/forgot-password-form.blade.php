@@ -3,7 +3,7 @@
 
     <form wire:submit.prevent="sendResetLink" class="space-y-4">
         <div>
-            <label for="email" class="form-label">Имейл</label>
+            <label for="email" class="form-label">{{ __("messages.email") }}</label>
             <input type="email" id="email" wire:model.defer="email" class="form-control @error('email') border-red-500 @enderror" wire:loading.attr="disabled" wire:target="login">
             @error('email') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
@@ -13,7 +13,7 @@
                 wire:loading.attr="disabled">
             <span wire:loading.remove class="flex items-center space-x-2">
                 <i class="fas fa-sign-in-alt"></i>
-                <span>Изпращане на линк</span>
+                <span>{{ __("messages.send_link") }}</span>
             </span>
             <span wire:loading class="flex items-center justify-center">
                 <i class="fas fa-spinner fa-spin"></i>

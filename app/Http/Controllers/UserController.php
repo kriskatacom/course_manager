@@ -37,13 +37,12 @@ class UserController extends Controller
 
         if (!$reset || !Hash::check($token, $reset->token) || Carbon::parse($reset->created_at)->addMinutes(60)->isPast()) {
             return redirect()->route("users.login")
-                ->with("error", "Този линк вече е невалиден. Моля, поискайте нов.");
+                ->with("error", __("messages.invalid_token"));
         }
 
         return view("users.reset-password", [
             "token" => $token,
             "email" => $email,
-            "title" => "Смяна на паролата"
         ]);
     }
 
@@ -54,11 +53,11 @@ class UserController extends Controller
             "email" => "required|email",
             "password" => "required|min:8|confirmed",
         ], [
-            "email.required" => "Моля, въведете имейл адрес.",
-            "email.email" => "Въведеният имейл е невалиден.",
-            "password.required" => "Моля, въведете нова парола.",
-            "password.min" => "Паролата трябва да съдържа поне 8 символа.",
-            "password.confirmed" => "Паролите не съвпадат.",
+            "email.required" => __("messages.enter_email"),
+            "email.email" => __("messages.invalid_email"),
+            "password.required" => __("messages.enter_new_password"),
+            "password.min" => __("messages.password_min_length"),
+            "password.confirmed" => __("messages.passwords_not_match"),
         ]);
 
         $status = Password::reset(
@@ -74,8 +73,8 @@ class UserController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route("users.login")->with("success", "Паролата беше сменена успешно. Моля, влезте с новата парола.")
-            : back()->with("error", "Възникна проблем при смяната на паролата. Опитайте отново.");
+            ? redirect()->route("users.login")->with("success", __("messages.password_changed"))
+            : back()->with("error", __("messages.password_change_failed"));
     }
 
     public function profile()
@@ -104,7 +103,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return redirect()->route("admin.users.index")->with("error", __("messages.user_id_not_found"));
+            return redirect()->route("admin.users.index")->with("error", __("messages.selected_role_incorrect"));
         }
 
         return view("admin.users.edit", compact("user"));

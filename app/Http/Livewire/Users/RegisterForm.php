@@ -27,15 +27,15 @@ class RegisterForm extends Component
     protected function messages()
     {
         return [
-            "name.required" => "Моля, въведете име.",
-            "name.min" => "Името трябва да е поне :min символа.",
-            "name.max" => "Името не може да е повече от :max символа.",
-            "email.required" => "Моля, въведете имейл.",
-            "email.email" => "Моля, въведете валиден имейл.",
-            "email.unique" => "Този имейл вече е регистриран.",
-            "password.required" => "Моля, въведете парола.",
-            "password.confirmed" => "Паролата не съвпада с потвърждението.",
-            "password.min" => "Паролата трябва да е поне :min символа.",
+            "name.required" => __("messages.validation_name_required"),
+            "name.min" => __("messages.validation_name_min"),
+            "name.max" => __("messages.validation_name_max"),
+            "email.required" => __("messages.validation_email_required"),
+            "email.email" => __("messages.validation_email_email"),
+            "email.unique" => __("messages.validation_email_unique"),
+            "password.required" => __("messages.validation_password_required"),
+            "password.confirmed" => __("messages.validation_password_confirmed"),
+            "password.min" => __("messages.validation_password_min"),
         ];
     }
 
@@ -61,7 +61,7 @@ class RegisterForm extends Component
 
         auth()->login($user);
 
-        session()->flash("success", "Регистрацията е успешна!");
+        session()->flash("success", __("messages.registration_success"));
 
         return redirect()->route("home");
     }

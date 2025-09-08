@@ -16,11 +16,14 @@ class ForgotPasswordForm extends Component
         "email" => "required|email|max:255|exists:users,email",
     ];
 
-    protected $messages = [
-        "email.required" => "Моля, въведете имейл.",
-        "email.email" => "Моля, въведете валиден имейл.",
-        "email.exists" => "Не откриваме потребител с такъв имейл.",
-    ];
+    public function messages()
+    {
+        return [
+            "email.required" => __("messages.validation_email_required"),
+            "email.email" => __("messages.validation_email_email"),
+            "email.exists" => __("messages.validation_email_exists"),
+        ];
+    }
 
     public function sendResetLink()
     {
@@ -29,7 +32,7 @@ class ForgotPasswordForm extends Component
         $user = \App\Models\User::where('email', $this->email)->first();
 
         if (!$user) {
-            session()->flash("error", "Не откриваме потребител с такъв имейл.");
+            session()->flash("error", __("messages.validation_email_exists"));
             return;
         }
 
@@ -53,7 +56,7 @@ class ForgotPasswordForm extends Component
 
         $user->notify(new ResetPasswordCustom($url));
 
-        session()->flash("message", "Изпратихме ви имейл с линк за смяна на паролата.");
+        session()->flash("message", __("messages.reset_link_sent"));
     }
 
     public function render()

@@ -2,19 +2,19 @@
     <form wire:submit.prevent="create" class="border border-gray-200 rounded shadow">
         <div class="space-y-5 p-5">
             <div>
-                <label for="name" class="form-label">Име и фамилия</label>
+                <label for="name" class="form-label">{{ __("messages.name") }}</label>
                 <input type="text" wire:model.defer="name" class="form-control" placeholder="{{ __("messages.enter_name") }}">
                 @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <div>
-                <label for="email" class="form-label">Имейл</label>
+                <label for="email" class="form-label">{{ __("messages.email") }}</label>
                 <input type="email" wire:model.defer="email" class="form-control" placeholder="{{ __("messages.enter_email") }}">
                 @error('email') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <div>
-                <label for="password" class="form-label">Парола</label>
+                <label for="password" class="form-label">{{ __("messages.password") }}</label>
                 <input type="password" wire:model.defer="password" class="form-control" placeholder="{{ __("messages.enter_password") }}">
                 @error('password') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
