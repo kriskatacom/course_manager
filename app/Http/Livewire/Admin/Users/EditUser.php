@@ -26,18 +26,21 @@ class EditUser extends Component
         "passwordConfirmation" => "required_with:newPassword|same:newPassword",
     ];
 
-    protected $messages = [
-        "user.name.required" => "Името е задължително.",
-        "user.name.max" => "Името не може да надвишава :max символа.",
-        "newEmail.required" => "Имейлът е задължителен.",
-        "newEmail.email" => "Въведете валиден имейл адрес.",
-        "newEmail.unique" => "Този имейл вече съществува.",
-        "newPassword.required" => "Паролата е задължителна.",
-        "newPassword.min" => "Паролата трябва да съдържа поне :min символа.",
-        "newPassword.confirmed" => "Паролите не съвпадат.",
-        "passwordConfirmation.required_with" => "Потвърждението на паролата е задължително.",
-        "passwordConfirmation.same" => "Паролите не съвпадат.",
-    ];
+    protected function messages()
+    {
+        return [
+            "user.name.required" => __("messages.validation_name_required"),
+            "user.name.max" => __("messages.validation_name_max"),
+            "newEmail.required" => __("messages.validation_email_required"),
+            "newEmail.email" => __("messages.validation_email_email"),
+            "newEmail.unique" => __("messages.validation_email_unique"),
+            "newPassword.required" => __("messages.validation_password_required"),
+            "newPassword.min" => __("messages.validation_password_min"),
+            "newPassword.confirmed" => __("messages.validation_password_confirmed"),
+            "passwordConfirmation.required_with" => __("messages.validation_password_confirmation_required"),
+            "passwordConfirmation.same" => __("messages.validation_password_same"),
+        ];
+    }
 
     public function mount($userId)
     {

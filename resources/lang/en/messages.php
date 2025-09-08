@@ -20,7 +20,7 @@ return [
     "admin" => "Admin",
     "moderator" => "Moderator",
     "choose_language" => "Choose a language",
-    "created_at" => "Created at",
+    "created_at" => "Created",
     "actions" => "Actions",
     "edit" => "Edit",
     "delete" => "Delete",
@@ -102,4 +102,7 @@ return [
     "role_label_string"  => "The label must be a string.",
     "role_label_max"     => "The label may not be greater than :max characters.",
     "back" => "Back",
+    "updated_at" => "Updated",
+    "create_new_permission" => "Create new permission",
+    "create_new_user" => "Create new user",
 ];

@@ -18,6 +18,7 @@
                     <th class="px-6 py-3 border-b">{{ __("messages.name") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.label") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.created_at") }}</th>
+                    <th class="px-6 py-3 border-b">{{ __("messages.updated_at") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.actions") }}</th>
                 </tr>
             </thead>
@@ -28,6 +29,7 @@
                         <td class="px-6 py-4 border-b">{{ $permission->name }}</td>
                         <td class="px-6 py-4 border-b">{{ __("messages." . $permission->name) }}</td>
                         <td class="px-6 py-4 border-b">{{ $permission->created_at->diffForHumans() }}</td>
+                        <td class="px-6 py-4 border-b">{{ $permission->updated_at->diffForHumans() }}</td>
                         <td class="px-6 py-4 border-b">
                             <a href="{{ route('admin.permissions.edit', $permission->id) }}" class="text-blue-600 hover:underline">
                                 {{ __("messages.edit") }}

@@ -81,7 +81,7 @@
                         <span class="checkmark">
                             <i class="fas fa-check"></i>
                         </span>
-                        <span class="role-text">{{ __("messages." . $r->name) }}</span>
+                        <span class="role-text">{{ $r->label }}</span>
                     </label>
                 @endforeach
             </div>

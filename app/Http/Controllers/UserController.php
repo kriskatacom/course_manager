@@ -104,9 +104,14 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return redirect()->route("admin.users.index")->with("error",__("messages.user_id_not_found"));
+            return redirect()->route("admin.users.index")->with("error", __("messages.user_id_not_found"));
         }
 
         return view("admin.users.edit", compact("user"));
+    }
+
+    public function create()
+    {
+        return view("admin.users.create");
     }
 }

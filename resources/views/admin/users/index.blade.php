@@ -8,11 +8,18 @@
     <div class="flex">
         <x-admin.sidebar />
 
-        <div class="bg-white border border-gray-200 flex-1 rounded shadow m-5">
-            <h1 class="text-2xl font-extrabold border-b border-gray-200 p-5">
-                <span>{{ __('messages.users') }}</span>
-                <span>({{ format_number($usersCount) }})</span>
-            </h1>
+        <div class="bg-white flex-1 rounded shadow m-5">
+            <div class="border border-gray-200">
+                <div class="flex justify-between items-center gap-5 p-5">
+                    <h1 class="text-2xl font-extrabold">
+                        <span>{{ __('messages.users') }}</span>
+                        <span>({{ format_number($usersCount) }})</span>
+                    </h1>
+                    <div>
+                        <a href="{{ route("admin.users.create", 0) }}" title="{{ __("messages.create_new_user") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                    </div>
+                </div>
+            </div>
 
             <div class="mx-5 mt-5">
                 <a href="{{ route("admin.users.index") }}" class="border border-gray-200 rounded py-2 px-4 hover:text-white hover:bg-primary {{ str_contains($currentHash, 'users') ? 'text-white bg-primary' : '' }}">{{ __("messages.users") }}</a>

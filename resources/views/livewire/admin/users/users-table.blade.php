@@ -19,6 +19,7 @@
                     <th class="px-6 py-3 border-b">{{ __("messages.email") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.roles") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.created_at") }}</th>
+                    <th class="px-6 py-3 border-b">{{ __("messages.updated_at") }}</th>
                     <th class="px-6 py-3 border-b">{{ __("messages.actions") }}</th>
                 </tr>
             </thead>
@@ -32,7 +33,7 @@
                             @if ($user->roles && $user->roles->isNotEmpty())
                                 @foreach($user->roles as $role)
                                     <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-1">
-                                        {{ __("messages." . $role->name) }}
+                                        {{ $role->label }}
                                     </span>
                                 @endforeach
                             @else
@@ -40,6 +41,7 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 border-b">{{ $user->created_at->diffForHumans() }}</td>
+                        <td class="px-6 py-4 border-b">{{ $user->updated_at->diffForHumans() }}</td>
                         <td class="px-6 py-4 border-b">
                             <a href="{{ route('admin.users.edit', $user->id) }}" class="text-blue-600 hover:underline">
                                 {{ __("messages.edit") }}

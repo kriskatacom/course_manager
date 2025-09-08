@@ -81,6 +81,7 @@ Route::group([
 
         Route::prefix("users")->group(function () {
             Route::get("/", [UserController::class, "all"])->name("admin.users.index");
+            Route::get("/create", [UserController::class, "create"])->name("admin.users.create");
             Route::get("/{id}/edit", [UserController::class, "edit"])->name("admin.users.edit");
             Route::put("/{id}", [UserController::class, "update"])->name("admin.users.update");
             Route::delete("/{id}", [UserController::class, "destroy"])->name("admin.users.destroy");
