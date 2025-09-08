@@ -29,6 +29,7 @@ class EditPermission extends Component
             "name.required" => __("messages.validation_permission_required"),
             "name.unique" => __("messages.validation_permission_unique"),
             "label.required" => __("messages.validation_permission_label"),
+            "selectedRoles" => __("messages.validation_permission_role_required"),
         ];
     }
 
@@ -42,6 +43,8 @@ class EditPermission extends Component
             $this->name = $this->permission->name;
             $this->label = $this->permission->label;
             $this->selectedRoles = $this->permission->roles->pluck('id')->toArray();
+        } else {
+            $this->selectedRoles = [Role::where('name', 'admin')->value('id')];
         }
     }
 
@@ -70,7 +73,7 @@ class EditPermission extends Component
 
         $permission->roles()->sync($this->selectedRoles);
 
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route("admin.permissions.edit", $this->permission->id);
     }
 
     public function render()

@@ -8,8 +8,8 @@
             @error('email') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
-            {{ __('messages.send_link') }}
+        <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="sendResetLink">
+            {{ __('messages.save_changes') }}
         </x-button-loading>
     </form>
 </div>

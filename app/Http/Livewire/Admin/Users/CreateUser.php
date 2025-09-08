@@ -47,13 +47,14 @@ class CreateUser extends Component
     public function mount()
     {
         $this->roles = Role::all();
+        $this->selectedRoles = [Role::where('name', 'user')->value('id')];
     }
 
     public function create()
     {
         $this->validate();
 
-        DB::transaction(function () {
+        $user = DB::transaction(function () {
             $user = User::create([
                 "name" => $this->name,
                 "email" => $this->email,
@@ -61,11 +62,11 @@ class CreateUser extends Component
             ]);
 
             $user->roles()->sync($this->selectedRoles);
+            return $user;
         });
 
         session()->flash("success", __("messages.user_created"));
-
-        return redirect()->route("admin.users.index");
+        return redirect()->route('admin.users.edit', $user->id);
     }
 
     public function render()

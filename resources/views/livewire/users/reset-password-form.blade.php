@@ -21,8 +21,8 @@
 
         <input type="hidden" wire:model.defer="token" value="{{ request()->route('token') }}">
 
-        <x-button-loading type="submit" icon="fas fa-sign-in-alt" class="my-2">
-            {{ __('messages.change_password') }}
+        <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="resetPassword">
+            {{ __('messages.save_changes') }}
         </x-button-loading>
     </form>
 </div>
