@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Admin\Categories;
 
 use App\Models\Category;
-use App\Models\Permission;
-use App\Models\Role;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Str;
@@ -14,6 +12,7 @@ class EditCategory extends Component
     public $categories;
     public $category;
     public $name;
+    public $parent_id = null;
 
     public function messages()
     {
@@ -31,6 +30,8 @@ class EditCategory extends Component
 
         if ($categoryId) {
             $this->category = Category::find($categoryId);
+            $this->name = $this->category->name;
+            $this->parent_id = $this->category->parent_id;
         }
     }
 
@@ -43,6 +44,7 @@ class EditCategory extends Component
                 "max:255",
                 Rule::unique("categories", "name")->ignore($this->category?->id),
             ],
+            "parent_id" => ["nullable", "exists:categories,id"],
         ]);
 
         $slug = Str::slug($this->name);
@@ -58,15 +60,19 @@ class EditCategory extends Component
             $slug = $originalSlug . "-" . $counter++;
         }
 
+        $this->parent_id = $this->parent_id ?: null;
+
         if ($this->category) {
             $this->category->update([
                 "name" => $this->name,
                 "slug" => $slug,
+                "parent_id" => $this->parent_id,
             ]);
         } else {
             $this->category = Category::create([
                 "name" => $this->name,
                 "slug" => $slug,
+                "parent_id" => $this->parent_id,
             ]);
         }
 
@@ -75,8 +81,29 @@ class EditCategory extends Component
         return redirect()->route("admin.categories.edit", $this->category->id);
     }
 
-    public function render()
+    public function getCategoryOptions($categories = null, $prefix = '', $excludeId = null)
     {
-        return view("livewire.admin.categories.edit-category");
+        $categories = $categories ?? Category::whereNull('parent_id')->orderBy('name')->get();
+        $options = [];
+
+        foreach ($categories as $category) {
+            if ($excludeId && $category->id == $excludeId) {
+                continue;
+            }
+
+            $options[] = [
+                'id' => $category->id,
+                'name' => $prefix . $category->name,
+            ];
+
+            if ($category->childrenRecursive->count()) {
+                $options = array_merge(
+                    $options,
+                    $this->getCategoryOptions($category->childrenRecursive, $prefix . '- ', $excludeId)
+                );
+            }
+        }
+
+        return $options;
     }
 }

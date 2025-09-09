@@ -141,4 +141,7 @@ return [
     "category_name" => "Име на категорията",
     "enter_category_name" => "Въведете име на категорията",
     "create_new_category" => "Създаване на нова категория",
+    "edit_category" => "Редактиране на категория",
+    "parent_category" => "Родителска категория",
+    "no_parent" => "Няма родител",
 ];

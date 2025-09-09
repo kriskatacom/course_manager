@@ -32,6 +32,9 @@ class CategoriesTable extends Component
     {
         $categories = Category::whereNull('parent_id')
             ->with('childrenRecursive')
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
