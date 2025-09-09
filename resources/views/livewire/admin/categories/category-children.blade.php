@@ -10,14 +10,14 @@
                     <a href="{{ route("admin.categories.edit", $category->id) }}">
                         <span class="hover:underline hover:text-primary">{{ $category->name }}</span>
                     </a>
+                    @if($category->children->count() > 0)
+                        <span class="text-gray-500">({{ $category->children->count() }})</span>
+                    @endif
                 </div>
                 <span class="inline-block {{ \App\Models\Category::STATUS_COLORS[$category->status] ?? 'bg-gray-600 text-gray-100' }} px-2 py-1 rounded mr-1">
                     {{ __("messages.$category->status") }}
                 </span>
             </div>
-            @if($category->children->count() > 0)
-                <span class="text-gray-500">({{ $category->children->count() }})</span>
-            @endif
         </div>
 
         <div class="flex space-x-5">

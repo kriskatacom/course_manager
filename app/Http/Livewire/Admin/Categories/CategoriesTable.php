@@ -4,16 +4,11 @@ namespace App\Http\Livewire\Admin\Categories;
 
 use App\Models\Category;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class CategoriesTable extends Component
 {
-    use WithPagination;
-    protected $paginationTheme = "tailwind";
-
-    public $search = "";
-    public $perPage = 10;
     protected $listeners = ["deleted" => "handleDeleted"];
+    public $statusFilter = null;
 
 
     public function handleDeleted()
@@ -21,6 +16,11 @@ class CategoriesTable extends Component
         session()->flash('success', 'Записът беше изтрит успешно!');
         $this->resetPage();
         $this->emit('flash', 'Записът беше изтрит успешно!', 'success');
+    }
+
+    public function setStatusFilter($status)
+    {
+        $this->statusFilter = $status;
     }
 
     public function updatingSearch()
@@ -32,8 +32,8 @@ class CategoriesTable extends Component
     {
         $categories = Category::whereNull('parent_id')
             ->with('childrenRecursive')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
             })
             ->orderBy('created_at', 'desc')
             ->get();
