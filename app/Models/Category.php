@@ -22,6 +22,22 @@ class Category extends Model
         "sort_order",
     ];
 
+    public const STATUSES = [
+        'draft',
+        'published',
+        'archived',
+        'hidden',
+        'pending',
+    ];
+
+    public const STATUS_COLORS = [
+        'draft' => 'bg-gray-600 text-gray-100',
+        'published' => 'bg-green-600 text-gray-100',
+        'archived' => 'bg-yellow-600 text-yellow-100',
+        'hidden' => 'bg-red-600 text-red-100',
+        'pending' => 'bg-blue-600 text-blue-100',
+    ];
+
     public const STATUS_DRAFT     = "draft";
     public const STATUS_PUBLISHED = "published";
     public const STATUS_ARCHIVED  = "archived";
@@ -57,5 +73,10 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id')
                     ->with('childrenRecursive');
+    }
+
+    public function statusClasses(): string
+    {
+        return self::STATUS_COLORS[$this->status] ?? 'bg-gray-600 text-gray-100';
     }
 }

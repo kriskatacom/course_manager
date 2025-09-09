@@ -5,9 +5,16 @@
             @if ($category->image_url)
                 <img class="w-14 h-14 max-w-14 max-h-14 object-cover border rounded-full" src="{{ $category->image_url }}" alt="{{ $category->name }}">
             @endif
-            <a href="{{ route("admin.categories.edit", $category->id) }}">
-                <span class="hover:underline hover:text-primary">{{ $category->name }}</span>
-            </a>
+            <div class="flex items-center gap-5">
+                <div class="lg:min-w-[350px]">
+                    <a href="{{ route("admin.categories.edit", $category->id) }}">
+                        <span class="hover:underline hover:text-primary">{{ $category->name }}</span>
+                    </a>
+                </div>
+                <span class="inline-block {{ \App\Models\Category::STATUS_COLORS[$category->status] ?? 'bg-gray-600 text-gray-100' }} px-2 py-1 rounded mr-1">
+                    {{ __("messages.$category->status") }}
+                </span>
+            </div>
             @if($category->children->count() > 0)
                 <span class="text-gray-500">({{ $category->children->count() }})</span>
             @endif

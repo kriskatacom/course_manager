@@ -12,7 +12,9 @@ class EditCategory extends Component
     public $categories;
     public $category;
     public $name;
+    public $description;
     public $parent_id = null;
+    public $status = "";
 
     public function messages()
     {
@@ -21,6 +23,7 @@ class EditCategory extends Component
             'name.string' => __('messages.category_name_string'),
             'name.max' => __('messages.category_name_max'),
             'name.unique' => __('messages.category_name_unique'),
+            'description.max' => __('messages.category_description_max'),
         ];
     }
 
@@ -32,6 +35,8 @@ class EditCategory extends Component
             $this->category = Category::find($categoryId);
             $this->name = $this->category->name;
             $this->parent_id = $this->category->parent_id;
+            $this->description = $this->category->description;
+            $this->status = $this->category->status;
         }
     }
 
@@ -45,6 +50,8 @@ class EditCategory extends Component
                 Rule::unique("categories", "name")->ignore($this->category?->id),
             ],
             "parent_id" => ["nullable", "exists:categories,id"],
+            "description" => ["nullable", "max:255"],
+            'status' => ['required', Rule::in(Category::STATUSES)],
         ]);
 
         $slug = Str::slug($this->name);
@@ -67,12 +74,16 @@ class EditCategory extends Component
                 "name" => $this->name,
                 "slug" => $slug,
                 "parent_id" => $this->parent_id,
+                "description"=> $this->description,
+                "status"=> $this->status,
             ]);
         } else {
             $this->category = Category::create([
                 "name" => $this->name,
                 "slug" => $slug,
                 "parent_id" => $this->parent_id,
+                "description"=> $this->description,
+                "status"=> $this->status,
             ]);
         }
 

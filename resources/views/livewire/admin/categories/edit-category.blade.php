@@ -21,6 +21,24 @@
                 </div>
             </div>
 
+            <div>
+                <label for="status" class="form-label">{{ __("messages.category_status") }}</label>
+                <select wire:model="status" id="status" class="form-control">
+                    @foreach(\App\Models\Category::STATUSES as $status)
+                        <option value="{{ $status }}">{{ __("messages.$status") }}</option>
+                    @endforeach
+                </select>
+                @error('status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+            </div>
+
+            <div>
+                <label for="description" class="form-label">{{ __("messages.category_description") }}</label>
+                <textarea wire:model.defer="description" id="description"
+                    placeholder="{{ __("messages.enter_category_description") }}" class="form-control"
+                    rows="5"></textarea>
+                @error('description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+            </div>
+
             <div class="space-x-5 flex items-center">
                 <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="save">
                     {{ __('messages.save_changes') }}
