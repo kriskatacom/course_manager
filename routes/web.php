@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -99,6 +100,11 @@ Route::group([
             Route::get("/{id}/edit", [PermissionController::class, "edit"])->name("admin.permissions.edit");
             Route::put("/{id}", [PermissionController::class, "update"])->name("admin.permissions.update");
             Route::delete("/{id}", [PermissionController::class, "destroy"])->name("admin.permissions.destroy");
+        });
+
+        Route::prefix("categories")->group(function () {
+            Route::get("/", [CategoryController::class, "all"])->name("admin.categories.index");
+            Route::get("/{id}/edit", [CategoryController::class, "edit"])->name("admin.categories.edit");
         });
     });
 });

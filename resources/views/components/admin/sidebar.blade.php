@@ -12,5 +12,10 @@
                 {{ __('messages.users') }}
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.categories.index') }}" class="block py-3 px-6 border-b border-gray-200 hover:text-white hover:bg-primary {{ request()->routeIs('admin.categories.*') ? 'text-white bg-primary' : 'text-gray-700' }}">
+                {{ __('messages.categories') }}
+            </a>
+        </li>
     </ul>
 </aside>
