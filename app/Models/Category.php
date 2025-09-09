@@ -28,14 +28,16 @@ class Category extends Model
         'archived',
         'hidden',
         'pending',
+        'deleted',
     ];
 
     public const STATUS_COLORS = [
         'draft' => 'bg-gray-600 text-gray-100',
         'published' => 'bg-green-600 text-gray-100',
-        'archived' => 'bg-yellow-600 text-yellow-100',
-        'hidden' => 'bg-red-600 text-red-100',
-        'pending' => 'bg-blue-600 text-blue-100',
+        'archived' => 'bg-yellow-600 text-gray-100',
+        'hidden' => 'bg-black text-gray-100',
+        'pending' => 'bg-blue-600 text-gray-100',
+        'deleted' => 'bg-red-600 text-gray-100',
     ];
 
     public const STATUS_DRAFT     = "draft";
@@ -43,6 +45,7 @@ class Category extends Model
     public const STATUS_ARCHIVED  = "archived";
     public const STATUS_HIDDEN    = "hidden";
     public const STATUS_PENDING   = "pending";
+    public const STATUS_DELETED   = "deleted";
 
     public function parent()
     {
@@ -78,5 +81,15 @@ class Category extends Model
     public function statusClasses(): string
     {
         return self::STATUS_COLORS[$this->status] ?? 'bg-gray-600 text-gray-100';
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($category) {
+            if (! $category->isForceDeleting()) {
+                $category->status = 'deleted';
+                $category->saveQuietly();
+            }
+        });
     }
 }

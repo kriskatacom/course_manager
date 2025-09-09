@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Admin\Categories;
 
 use App\Models\Category;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CategoriesTable extends Component
 {
+    use WithPagination;
     protected $listeners = ["deleted" => "handleDeleted"];
     public $statusFilter = null;
-
 
     public function handleDeleted()
     {
@@ -28,12 +29,30 @@ class CategoriesTable extends Component
         $this->resetPage();
     }
 
+    public function restore($categoryId)
+    {
+        $category = Category::onlyTrashed()->find($categoryId);
+
+        if ($category) {
+            $category->restore();
+            $category->status = 'archived';
+            $category->saveQuietly();
+
+            $this->emit('flash', __("messages.category_restored"), 'success');
+        }
+    }
+
     public function render()
     {
-        $categories = Category::whereNull('parent_id')
+        $categories = Category::query()
+            ->whereNull('parent_id')
             ->with('childrenRecursive')
             ->when($this->statusFilter, function ($query) {
-                $query->where('status', $this->statusFilter);
+                if ($this->statusFilter === 'deleted') {
+                    $query->onlyTrashed();
+                } else {
+                    $query->where('status', $this->statusFilter);
+                }
             })
             ->orderBy('created_at', 'desc')
             ->get();

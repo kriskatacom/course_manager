@@ -2,20 +2,8 @@
     <div class="text-2xl font-extrabold text-center text-black py-5 border-b border-gray-200">{{ __('messages.administration') }}</div>
 
     <ul class="text-lg">
-        <li>
-            <a href="{{ route('admin.dashboard') }}" class="block py-3 px-6 border-b border-gray-200 hover:text-white hover:bg-primary {{ request()->routeIs('admin.dashboard') ? 'text-white bg-primary' : 'text-gray-700' }}">
-                {{ __('messages.dashboard') }}
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.users.index') }}" class="block py-3 px-6 border-b border-gray-200 hover:text-white hover:bg-primary {{ request()->routeIs('admin.users.*') ? 'text-white bg-primary' : 'text-gray-700' }}">
-                {{ __('messages.users') }}
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.categories.index') }}" class="block py-3 px-6 border-b border-gray-200 hover:text-white hover:bg-primary {{ request()->routeIs('admin.categories.*') ? 'text-white bg-primary' : 'text-gray-700' }}">
-                {{ __('messages.categories') }}
-            </a>
-        </li>
+        <x-admin.sidebar-item route="admin.dashboard" icon="fa-solid fa-gauge" text="messages.dashboard" active="admin.dashboard" />
+        <x-admin.sidebar-item route="admin.users.index" icon="fa-solid fa-users" text="messages.users" active="admin.users.*" />
+        <x-admin.sidebar-item route="admin.categories.index" icon="fa-solid fa-layer-group" text="messages.categories" active="admin.categories.*" />
     </ul>
 </aside>

@@ -26,7 +26,7 @@
         </div>
 
         <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="login">
-            {{ __('messages.save_changes') }}
+            {{ __('messages.login') }}
         </x-button-loading>
     </form>
 </div>

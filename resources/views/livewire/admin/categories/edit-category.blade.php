@@ -9,16 +9,22 @@
                     @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-                <div>
-                    <label for="parent_id" class="form-label">{{ __("messages.parent_category") }}</label>
-                    <select wire:model="parent_id" id="parent_id" class="form-control">
-                        <option value="">{{ __("messages.no_parent") }}</option>
-                        @foreach($this->getCategoryOptions(null, '', $this->category?->id) as $categoryOption)
-                            <option value="{{ $categoryOption['id'] }}">{{ $categoryOption['name'] }}</option>
-                        @endforeach
-                    </select>
-                    @error('parent_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
-                </div>
+                @php
+                    $categories = $this->getCategoryOptions(null, '', $this->category?->id);
+                @endphp
+
+                @if (count($categories) > 0)
+                    <div>
+                        <label for="parent_id" class="form-label">{{ __("messages.parent_category") }}</label>
+                        <select wire:model="parent_id" id="parent_id" class="form-control">
+                            <option value="">{{ __("messages.no_parent") }}</option>
+                            @foreach($categories as $categoryOption)
+                                <option value="{{ $categoryOption['id'] }}">{{ $categoryOption['name'] }}</option>
+                            @endforeach
+                        </select>
+                        @error('parent_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                    </div>
+                @endif
             </div>
 
             <div>

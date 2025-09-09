@@ -14,7 +14,7 @@ class EditCategory extends Component
     public $name;
     public $description;
     public $parent_id = null;
-    public $status = "";
+    public $status = "draft";
 
     public function messages()
     {
@@ -24,6 +24,7 @@ class EditCategory extends Component
             'name.max' => __('messages.category_name_max'),
             'name.unique' => __('messages.category_name_unique'),
             'description.max' => __('messages.category_description_max'),
+            'status.required' => __('messages.category_status_required'),
         ];
     }
 

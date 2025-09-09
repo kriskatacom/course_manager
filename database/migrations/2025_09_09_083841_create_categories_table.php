@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status', ['draft', 'published', 'archived', 'hidden', 'pending'])->default('draft');
+            $table->enum('status', ['draft', 'published', 'archived', 'hidden', 'pending', 'deleted'])->default('draft');
             $table->integer('sort_order')->default(0);
             $table->timestamps();
             $table->softDeletes();

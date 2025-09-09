@@ -9,6 +9,7 @@
             'archived' => 'fas fa-archive',
             'hidden' => 'fas fa-eye-slash',
             'pending' => 'fas fa-clock',
+            'deleted' => 'fas fa-trash-alt',
         ];
     @endphp
 

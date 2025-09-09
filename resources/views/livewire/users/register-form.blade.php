@@ -32,8 +32,8 @@
             </a>
         </div>
 
-        <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="register">
-            {{ __('messages.save_changes') }}
+        <x-button-loading type="submit" icon="fa-solid fa-arrow-right-to-bracket" target="register">
+            {{ __('messages.register') }}
         </x-button-loading>
     </form>
 </div>

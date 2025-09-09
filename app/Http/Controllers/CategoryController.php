@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
             if (!$category) {
                 return redirect()->route("admin.categories.index")
-                    ->with("error", __("messages.selected_category_incorrect"));
+                    ->with("error", __("messages.category_not_found"));
             }
         }
 

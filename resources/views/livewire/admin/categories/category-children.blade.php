@@ -20,13 +20,16 @@
             </div>
         </div>
 
-        <div class="flex space-x-5">
-            <a href="{{ route('admin.categories.edit', $category->id) }}"
-                class="text-blue-600 hover:underline">Редакция</a>
-            @if (Auth::user()->hasRole("admin"))
-                <button class="text-red-600 ml-2" wire:click="$emit('openModal', {{ $category->id }}, '{{ addslashes(\App\Models\Category::class) }}')">Изтрий</button>
-            @endif
-        </div>
+        @if ($category->status != "deleted")
+            <div class="flex space-x-5">
+                <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-blue-600 hover:underline">Редакция</a>
+                @if (Auth::user()->hasRole("admin"))
+                    <button class="text-red-600 ml-2" wire:click="$emit('openModal', {{ $category->id }}, '{{ addslashes(\App\Models\Category::class) }}')">Изтрий</button>
+                @endif
+            </div>
+        @else
+            <button wire:click="restore({{ $category->id }})" class="text-green-600">{{ __("messages.recovery") }}</button>
+        @endif
     </div>
 
     @if($category->children->count() > 0)
