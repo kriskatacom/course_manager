@@ -15,6 +15,15 @@ class PermissionsTable extends Component
 
     protected $paginationTheme = "tailwind";
 
+    protected $listeners = ["deleted" => "handleDeleted"];
+
+    public function handleDeleted()
+    {
+        session()->flash('success', 'Записът беше изтрит успешно!');
+        $this->resetPage();
+        $this->emit('flash', 'Записът беше изтрит успешно!', 'success');
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();

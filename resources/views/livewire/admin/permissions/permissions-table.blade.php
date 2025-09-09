@@ -1,4 +1,6 @@
 <div>
+    <livewire:components.flash-message />
+
     <div class="m-5 flex justify-between items-center">
         <input type="text" wire:model.debounce.300ms="search" placeholder="{{ __("messages.search_permission") }}..."
             class="form-control">
@@ -34,12 +36,17 @@
                             <a href="{{ route('admin.permissions.edit', $permission->id) }}" class="text-blue-600 hover:underline">
                                 {{ __("messages.edit") }}
                             </a>
+                            @if (Auth::user()->hasRole("admin") && $permission->name != "access-admin")
+                                 <button class="text-red-600 ml-2" wire:click="$emit('openModal', {{ $permission->id }}, '{{ addslashes(\App\Models\Permission::class) }}')">Изтрий</button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <livewire:components.delete-modal />
 
     @if ($permissions->hasPages())
         <div class="p-5">

@@ -1,4 +1,6 @@
 <div>
+    <livewire:components.flash-message />
+
     <div class="m-5 flex justify-between items-center">
         <input type="text" wire:model.debounce.300ms="search" placeholder="{{ __("messages.search_role") }}..."
             class="form-control">
@@ -34,12 +36,17 @@
                             <a href="{{ route('admin.roles.edit', $role->id) }}" class="text-blue-600 hover:underline">
                                 {{ __("messages.edit") }}
                             </a>
+                            @if (Auth::user()->hasRole("admin") && $role->name != "admin")
+                                 <button class="text-red-600 ml-2" wire:click="$emit('openModal', {{ $role->id }}, '{{ addslashes(\App\Models\Role::class) }}')">Изтрий</button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <livewire:components.delete-modal />
 
     @if ($roles->hasPages())
         <div class="p-5">
