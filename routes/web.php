@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseCountroller;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -105,6 +106,11 @@ Route::group([
         Route::prefix("categories")->group(function () {
             Route::get("/", [CategoryController::class, "all"])->name("admin.categories.index");
             Route::get("/{id}/edit", [CategoryController::class, "edit"])->name("admin.categories.edit");
+        });
+
+        Route::prefix("courses")->group(function () {
+            Route::get("/", [CourseCountroller::class, "all"])->name("admin.courses.index");
+            Route::get("/{id}/save", [CourseCountroller::class, "save"])->name("admin.courses.save");
         });
     });
 });

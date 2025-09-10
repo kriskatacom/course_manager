@@ -8,8 +8,9 @@
             <h1 class="text-2xl font-extrabold border-b border-gray-200 p-5">Табло</h1>
 
             <ul class="p-5 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                <x-admin.dashboard.dashboard-item title="{{ __('messages.administration') }}" :count="$usersCount" icon="fa-solid fa-users" :route="route('admin.users.index')" />
+                <x-admin.dashboard.dashboard-item title="{{ __('messages.users') }}" :count="$usersCount" icon="fa-solid fa-users" :route="route('admin.users.index')" />
                 <x-admin.dashboard.dashboard-item title="{{ __('messages.categories') }}" :count="$categoriesCount" icon="fa-solid fa-layer-group" :route="route('admin.categories.index')" />
+                <x-admin.dashboard.dashboard-item title="{{ __('messages.courses') }}" :count="$coursesCount" icon="fa-solid fa-graduation-cap" :route="route('admin.courses.index')" />
             </ul>
         </div>
     </div>
