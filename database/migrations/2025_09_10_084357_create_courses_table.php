@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string("slug")->unique();
             $table->text("short_description")->nullable();
             $table->longText("description")->nullable();
-            $table->foreignId("category_id")->constrained("categories")->onDelete("cascade");
+            $table->foreignId("category_id")->nullable()->constrained("categories")->onDelete("cascade");
             $table->enum("level", ["beginner", "intermediate", "advanced"])->default("beginner");
             $table->integer("duration")->nullable();
             $table->decimal("price", 8, 2)->default(0);
