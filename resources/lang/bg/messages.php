@@ -184,5 +184,10 @@ return [
     "enter_course_price" => "Въведете цена на курса",
     "course_discount_price" => "Цена на промоция",
     "enter_course_discount_price" => "Въведете цена на промоция",
+    "course_price_required" => "Цената на курса е задължителна!",
     "discount_must_be_less_than_price" => "Промоционалната цена на курса не може да бъде по-висока или равна от основната цена.",
+    "short_description" => "Кратко описание",
+    "description" => "Описание",
+    "course_short_description_max" => "Краткото описание не може да съдържа повече от :max букви.",
+    "course_description_max" => "Описанието не може да съдържа повече от :max букви.",
 ];

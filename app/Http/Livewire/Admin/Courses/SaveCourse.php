@@ -27,6 +27,8 @@ class SaveCourse extends Component
             'course.discount_price.numeric' => __('messages.discount_price_numeric'),
             'course.discount_price.min' => __('messages.discount_price_min'),
             'course.category_id.exists' => __('messages.category_not_found'),
+            'course.description.max' => __('messages.course_description_max'),
+            'course.short_description.max' => __('messages.course_short_description_max'),
         ];
     }
 
@@ -55,6 +57,9 @@ class SaveCourse extends Component
                     }
                 }
             ],
+            "course.short_description" => ["nullable", "max:2000"],
+            "course.description" => ["nullable", "max:100000"],
+            'course.status' => ['required', Rule::in(Course::STATUSES)],
         ];
     }
 
