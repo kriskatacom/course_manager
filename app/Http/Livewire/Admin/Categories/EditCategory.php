@@ -78,6 +78,8 @@ class EditCategory extends Component
                 "description"=> $this->description,
                 "status"=> $this->status,
             ]);
+
+            $this->emit('flash', __("messages.saved_changes"), 'success');
         } else {
             $this->category = Category::create([
                 "name" => $this->name,
@@ -86,11 +88,10 @@ class EditCategory extends Component
                 "description"=> $this->description,
                 "status"=> $this->status,
             ]);
+
+            session()->flash("success", __("messages.saved_changes"));
+            return redirect()->route("admin.categories.edit", $this->category->id);
         }
-
-        session()->flash("success", __("messages.saved_changes"));
-
-        return redirect()->route("admin.categories.edit", $this->category->id);
     }
 
     public function getCategoryOptions($categories = null, $prefix = '', $excludeId = null)

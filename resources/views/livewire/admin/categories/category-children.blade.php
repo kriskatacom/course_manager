@@ -7,9 +7,14 @@
             @endif
             <div class="flex items-center gap-5">
                 <div class="lg:min-w-[350px]">
-                    <a href="{{ route("admin.categories.edit", $category->id) }}">
-                        <span class="hover:underline hover:text-primary">{{ $category->name }}</span>
-                    </a>
+                    @if ($category->status == "deleted")
+                        <span>{{ $category->name }}</span>
+                    @else
+                        <a href="{{ route("admin.categories.edit", $category->id) }}">
+                            <span class="hover:underline hover:text-primary">{{ $category->name }}</span>
+                        </a>
+                    @endif
+
                     @if($category->children->count() > 0)
                         <span class="text-gray-500">({{ $category->children->count() }})</span>
                     @endif

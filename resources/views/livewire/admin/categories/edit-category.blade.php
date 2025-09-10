@@ -1,5 +1,6 @@
-<div class="px-5 mb-5 space-y-5">
-    <form wire:submit.prevent="save" class="border border-gray-200 rounded shadow">
+<div class="mb-5 space-y-5">
+    <livewire:components.flash-message />
+    <form wire:submit.prevent="save" class="border border-gray-200 rounded shadow m-5">
         <div class="space-y-5 p-5">
             <div class="grid lg:grid-cols-2 gap-5">
                 <div>

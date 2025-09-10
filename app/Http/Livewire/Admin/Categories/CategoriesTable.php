@@ -9,8 +9,14 @@ use Livewire\WithPagination;
 class CategoriesTable extends Component
 {
     use WithPagination;
+
     protected $listeners = ["deleted" => "handleDeleted"];
-    public $statusFilter = null;
+
+    public $status = null;
+
+    protected $queryString = [
+        'status' => ['except' => null],
+    ];
 
     public function handleDeleted()
     {
@@ -21,7 +27,7 @@ class CategoriesTable extends Component
 
     public function setStatusFilter($status)
     {
-        $this->statusFilter = $status;
+        $this->status = $status;
     }
 
     public function updatingSearch()
@@ -47,11 +53,11 @@ class CategoriesTable extends Component
         $categories = Category::query()
             ->whereNull('parent_id')
             ->with('childrenRecursive')
-            ->when($this->statusFilter, function ($query) {
-                if ($this->statusFilter === 'deleted') {
+            ->when($this->status, function ($query) {
+                if ($this->status === 'deleted') {
                     $query->onlyTrashed();
                 } else {
-                    $query->where('status', $this->statusFilter);
+                    $query->where('status', $this->status);
                 }
             })
             ->orderBy('created_at', 'desc')

@@ -14,19 +14,19 @@
     @endphp
 
     <div class="m-5 flex items-center gap-2">
-        @foreach($statuses as $status)
-            <button wire:click.prevent="$set('statusFilter', '{{ $status }}')"
-                class="relative flex items-center space-x-2 border border-gray-200 rounded py-2 px-4 hover:text-white hover:bg-primary {{ $statusFilter === $status ? 'text-white bg-primary' : '' }}">
+        @foreach($statuses as $statusItem)
+            <button wire:click.prevent="$set('status', '{{ $statusItem }}')"
+                class="relative flex items-center space-x-2 border border-gray-200 rounded py-2 px-4 hover:text-white hover:bg-primary {{ $status === $statusItem ? 'text-white bg-primary' : '' }}">
 
                 <span class="flex items-center space-x-2" wire:loading.remove
-                    wire:target="$set('statusFilter', '{{ $status }}')">
-                    <i class="{{ $statusIcons[$status] ?? 'fas fa-tag' }}"></i>
-                    <span>{{ __("messages.$status") }}</span>
+                    wire:target="$set('status', '{{ $statusItem }}')">
+                    <i class="{{ $statusIcons[$statusItem] ?? 'fas fa-tag' }}"></i>
+                    <span>{{ __("messages.$statusItem") }}</span>
                 </span>
 
-                <span class="flex items-center space-x-2" wire:loading wire:target="$set('statusFilter', '{{ $status }}')">
+                <span class="flex items-center space-x-2" wire:loading wire:target="$set('status', '{{ $statusItem }}')">
                     <i class="fas fa-spinner fa-spin"></i>
-                    <span>{{ __("messages.$status") }}</span>
+                    <span>{{ __("messages.$statusItem") }}</span>
                 </span>
             </button>
         @endforeach
