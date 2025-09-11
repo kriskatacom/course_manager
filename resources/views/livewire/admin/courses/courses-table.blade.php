@@ -1,4 +1,16 @@
 <div>
+    <div class="border border-gray-200">
+        <div class="flex justify-between items-center gap-5 p-5">
+            <h1 class="text-2xl font-extrabold">
+                <span>{{ __('messages.courses') }}</span>
+                <span>({{ format_number($coursesCount) }})</span>
+            </h1>
+            <div>
+                <a href="{{ route("admin.courses.save", 0) }}" title="{{ __("messages.create_new_course") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+            </div>
+        </div>
+    </div>
+
     <livewire:components.flash-message />
 
     <div class="m-5 flex justify-between items-center">

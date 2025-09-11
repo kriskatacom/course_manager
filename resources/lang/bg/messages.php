@@ -190,4 +190,9 @@ return [
     "description" => "Описание",
     "course_short_description_max" => "Краткото описание не може да съдържа повече от :max букви.",
     "course_description_max" => "Описанието не може да съдържа повече от :max букви.",
+    "delete_permanently" => "Изтриване завинаги",
+    "category_deleted_successfully" => "Категорията беше изтрита успешно!",
+    "category_move_trash" => "Категорията беше премествена в кошчето!",
+    "course_deleted_successfully" => "Курсът беше изтрит успешно!",
+    "course_move_trash" => "Курсът беше премествен в кошчето!",
 ];

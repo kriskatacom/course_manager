@@ -17,9 +17,12 @@ class CoursesTable extends Component
 
     public function handleDeleted()
     {
-        session()->flash("success", "Курсът беше изтрит успешно!");
         $this->resetPage();
-        $this->emit("flash", "Курсът беше изтрит успешно!", "success");
+        $this->dispatchBrowserEvent('flash-message', [
+            'message' => __("messages.course_move_trash"),
+            'type' => 'success',
+            'timeout' => 3000
+        ]);
     }
 
     public function updatingSearch()
@@ -40,9 +43,11 @@ class CoursesTable extends Component
         }
 
         $courses = $query->paginate($this->perPage);
+        $coursesCount = Course::count();
 
         return view("livewire.admin.courses.courses-table", [
             "courses" => $courses,
+            "coursesCount" => $coursesCount,
         ]);
     }
 }

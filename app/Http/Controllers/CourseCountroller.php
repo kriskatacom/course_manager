@@ -8,9 +8,7 @@ class CourseCountroller extends Controller
 {
     public function all()
     {
-        $coursesCount = Course::count();
-        
-        return view("admin.courses.index", compact("coursesCount"));
+        return view("admin.courses.index");
     }
 
     public function save($locale, $id)

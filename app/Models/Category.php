@@ -88,6 +88,9 @@ class Category extends Model
         static::deleting(function ($category) {
             if (! $category->isForceDeleting()) {
                 $category->status = 'deleted';
+
+                if ($category->parent_id) $category->parent_id = null;
+                
                 $category->saveQuietly();
             }
         });

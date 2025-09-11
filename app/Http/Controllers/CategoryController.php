@@ -8,8 +8,7 @@ class CategoryController extends Controller
 {
     public function all()
     {
-        $categoriesCount = Category::count();
-        return view("admin.categories.index", compact("categoriesCount"));
+        return view("admin.categories.index");
     }
 
     public function edit($locale, $id)

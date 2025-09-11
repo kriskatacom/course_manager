@@ -22,7 +22,12 @@ class CategoriesTable extends Component
     {
         session()->flash('success', 'Записът беше изтрит успешно!');
         $this->resetPage();
-        $this->emit('flash', 'Записът беше изтрит успешно!', 'success');
+
+        $this->dispatchBrowserEvent('flash-message', [
+            'message' => __("messages.category_move_trash"),
+            'type' => 'success',
+            'timeout' => 3000
+        ]);
     }
 
     public function setStatusFilter($status)
@@ -44,7 +49,32 @@ class CategoriesTable extends Component
             $category->status = 'archived';
             $category->saveQuietly();
 
-            $this->emit('flash', __("messages.category_restored"), 'success');
+            $this->dispatchBrowserEvent('flash-message', [
+                'message' => __("messages.category_restored"),
+                'type' => 'success',
+                'timeout' => 6000
+            ]);
+        }
+    }
+
+    public function deletePermanently($categoryId)
+    {
+        $category = Category::onlyTrashed()->find($categoryId);
+
+        if ($category) {
+            if ($category->children()->withTrashed()->exists()) {
+                foreach ($category->children()->withTrashed()->get() as $child) {
+                    $child->forceDelete();
+                }
+            }
+
+            $category->forceDelete();
+
+            $this->dispatchBrowserEvent('flash-message', [
+                'message' => __("messages.category_deleted_successfully"),
+                'type' => 'success',
+                'timeout' => 3000
+            ]);
         }
     }
 
@@ -63,8 +93,11 @@ class CategoriesTable extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $categoriesCount = Category::count();
+
         return view("livewire.admin.categories.categories-table", [
             "categories" => $categories,
+            "categoriesCount" => $categoriesCount,
         ]);
     }
 }

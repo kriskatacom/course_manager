@@ -1,6 +1,4 @@
 <div>
-    <livewire:components.flash-message />
-
     @php
         $statuses = \App\Models\Category::STATUSES;
         $statusIcons = [
@@ -12,6 +10,20 @@
             'deleted' => 'fas fa-trash-alt',
         ];
     @endphp
+
+    <div class="border border-gray-200">
+        <div class="flex justify-between items-center gap-5 p-5">
+            <h1 class="text-2xl font-extrabold">
+                <span>{{ __('messages.categories') }}</span>
+                <span>({{ format_number($categoriesCount) }})</span>
+            </h1>
+            <div>
+                <a href="{{ route("admin.categories.edit", 0) }}" title="{{ __("messages.create_new_category") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+            </div>
+        </div>
+    </div>
+
+    <livewire:components.flash-message />
 
     <div class="m-5 flex items-center gap-2">
         @foreach($statuses as $statusItem)

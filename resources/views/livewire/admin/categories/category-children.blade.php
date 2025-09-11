@@ -33,7 +33,10 @@
                 @endif
             </div>
         @else
-            <button wire:click="restore({{ $category->id }})" class="text-green-600">{{ __("messages.recovery") }}</button>
+            <div class="flex items-center gap-5">
+                <button wire:click="restore({{ $category->id }})" class="text-green-600">{{ __("messages.recovery") }}</button>
+                <button wire:click="deletePermanently({{ $category->id }})" class="text-red-600">{{ __("messages.delete_permanently") }}</button>
+            </div>
         @endif
     </div>
 
