@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId("category_id")->nullable()->constrained("categories")->onDelete("cascade");
             $table->enum("level", ["beginner", "intermediate", "advanced"])->default("beginner");
             $table->integer("duration")->nullable();
-            $table->decimal("price", 8, 2)->default(0);
+            $table->decimal("price", 8, 2)->nullable()->default(null);
             $table->boolean("is_free")->default(false);
             $table->decimal("discount_price", 8, 2)->nullable();
             $table->enum("status", ["draft", "published", "archived"])->default("draft");

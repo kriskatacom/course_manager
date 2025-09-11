@@ -11,8 +11,16 @@ use Illuminate\Support\Str;
 class SaveCourse extends Component
 {
     public $discount_price;
+    public $duration;
     public Course $course;
     public $categories;
+
+    protected $listeners = ["deleted" => "handleDeleted"];
+
+    public function handleDeleted()
+    {
+        return redirect()->route("admin.courses.index")->with("success", __("messages.course_deleted_successfully"));
+    }
 
     protected function messages()
     {
@@ -21,7 +29,6 @@ class SaveCourse extends Component
             'course.title.string' => __('messages.course_title_string'),
             'course.title.max' => __('messages.course_title_max'),
             'course.title.unique' => __('messages.course_title_unique'),
-            'course.price.required' => __('messages.course_price_required'),
             'course.price.numeric' => __('messages.course_price_numeric'),
             'course.price.min' => __('messages.course_price_min'),
             'course.discount_price.numeric' => __('messages.discount_price_numeric'),
@@ -29,6 +36,7 @@ class SaveCourse extends Component
             'course.category_id.exists' => __('messages.category_not_found'),
             'course.description.max' => __('messages.course_description_max'),
             'course.short_description.max' => __('messages.course_short_description_max'),
+            'duration.numeric' => __('messages.course_duration_numeric'),
         ];
     }
 
@@ -46,7 +54,7 @@ class SaveCourse extends Component
                     ->where(fn($query) => $query->where('slug', $slug)),
             ],
             'course.category_id' => ['nullable', 'exists:categories,id'],
-            'course.price' => ['required', 'numeric', 'min:0'],
+            'course.price' => ['nullable', 'numeric', 'min:0'],
             'discount_price' => [
                 'nullable',
                 'numeric',
@@ -60,6 +68,8 @@ class SaveCourse extends Component
             "course.short_description" => ["nullable", "max:2000"],
             "course.description" => ["nullable", "max:100000"],
             'course.status' => ['required', Rule::in(Course::STATUSES)],
+            "duration" => ["nullable", "numeric"],
+            "course.is_free" => ["nullable"]
         ];
     }
 
@@ -70,6 +80,7 @@ class SaveCourse extends Component
         if ($courseId) {
             $this->course = Course::find($courseId);
             $this->discount_price = $this->course?->discount_price;
+            $this->duration = $this->course?->duration;
 
             if (!$this->course) {
                 session()->flash('error', __('messages.course_not_found'));
@@ -77,6 +88,8 @@ class SaveCourse extends Component
             }
         } else {
             $this->course = new Course();
+            $this->course->status = "draft";
+            $this->course->duration = $this->duration;
         }
     }
 
@@ -85,10 +98,9 @@ class SaveCourse extends Component
         $this->validate();
 
         $this->course->slug = Str::slug($this->course->title);
-
         $this->course->category_id = $this->course->category_id ?: null;
-
         $this->course->discount_price = $this->discount_price ?: null;
+
         $this->course->save();
 
         session()->flash('success', __('messages.saved_changes'));
