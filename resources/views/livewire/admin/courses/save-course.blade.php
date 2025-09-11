@@ -39,15 +39,19 @@
                 </label>
             </div>
 
+            @php
+                $categories = \App\Models\Category::getCategoryOptions(null, '', null);
+            @endphp
+
             <!-- Категория -->
             <h3 class="text-2xl font-semibold">{{ __("messages.category") }}</h3>
-            @if ($categories->count())
+            @if (count($categories) > 0)
                 <div>
                     <label for="category" class="form-label">{{ __("messages.category") }}</label>
                     <select wire:model.defer="course.category_id" class="form-control">
                         <option value="" selected>{{ __('messages.no_category') }}</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category["id"] }}">{{ $category["name"] }}</option>
                         @endforeach
                     </select>
                     @error('course.category_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -104,10 +108,9 @@
                     <p class="mb-5 text-red-700 max-w-md">
                         {{ __("messages.move_to_trash_course_message") }}
                     </p>
-                    <button type="button" class="btn-danger" wire:click="$emit('openModal', {{ $course->id }}, '{{ addslashes(\App\Models\Course::class) }}')">
-                        <i class="fa-solid fa-trash"></i>
+                    <x-button-loading type="button" icon="fas fa-trash" target="save" wire:click="$emit('openModal', {{ $course->id }}, '{{ addslashes(\App\Models\Course::class) }}')" class="btn-danger">
                         {{ __('messages.move_to_trash') }}
-                    </button>
+                    </x-button-loading>
                 </div>
             @endif
         </div>

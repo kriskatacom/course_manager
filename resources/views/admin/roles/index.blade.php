@@ -16,7 +16,9 @@
                         <span>({{ format_number($rolesCount) }})</span>
                     </h1>
                     <div>
-                        <a href="{{ route("admin.roles.edit", 0) }}" title="{{ __("messages.create_new_role") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                        <x-link href="{{ route('admin.roles.edit', 0) }}" :title="__('messages.create_new_role')" icon="fa-plus" variant="primary">
+                            {{ __('messages.create') }}
+                        </x-link>
                     </div>
                 </div>
             </div>

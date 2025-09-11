@@ -16,7 +16,9 @@
                         <span>({{ format_number($permissionsCount) }})</span>
                     </h1>
                     <div>
-                        <a href="{{ route("admin.permissions.edit", 0) }}" title="{{ __("messages.create_new_permission") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                        <x-link href="{{ route('admin.permissions.edit', 0) }}" :title="__('messages.create_new_permission')" icon="fa-plus" variant="primary">
+                            {{ __('messages.create') }}
+                        </x-link>
                     </div>
                 </div>
             </div>

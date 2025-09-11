@@ -40,12 +40,12 @@ class Category extends Model
         'deleted' => 'bg-red-600 text-gray-100',
     ];
 
-    public const STATUS_DRAFT     = "draft";
+    public const STATUS_DRAFT = "draft";
     public const STATUS_PUBLISHED = "published";
-    public const STATUS_ARCHIVED  = "archived";
-    public const STATUS_HIDDEN    = "hidden";
-    public const STATUS_PENDING   = "pending";
-    public const STATUS_DELETED   = "deleted";
+    public const STATUS_ARCHIVED = "archived";
+    public const STATUS_HIDDEN = "hidden";
+    public const STATUS_PENDING = "pending";
+    public const STATUS_DELETED = "deleted";
 
     public function parent()
     {
@@ -71,11 +71,11 @@ class Category extends Model
     {
         return $query->where("status", self::STATUS_ARCHIVED);
     }
-    
+
     public function childrenRecursive()
     {
         return $this->hasMany(Category::class, 'parent_id')
-                    ->with('childrenRecursive');
+            ->with('childrenRecursive');
     }
 
     public function statusClasses(): string
@@ -86,13 +86,43 @@ class Category extends Model
     protected static function booted()
     {
         static::deleting(function ($category) {
-            if (! $category->isForceDeleting()) {
+            if (!$category->isForceDeleting()) {
                 $category->status = 'deleted';
-
-                if ($category->parent_id) $category->parent_id = null;
-                
                 $category->saveQuietly();
+
+                $children = $category->children;
+
+                foreach ($children as $child) {
+                    $child->parent_id = $category->parent_id ?: null;
+                    $child->saveQuietly();
+                }
             }
         });
+    }
+
+    public static function getCategoryOptions($categories = null, $prefix = '', $excludeId = null)
+    {
+        $categories = $categories ?? Category::whereNull('parent_id')->orderBy('name')->get();
+        $options = [];
+
+        foreach ($categories as $category) {
+            if ($excludeId && $category->id == $excludeId) {
+                continue;
+            }
+
+            $options[] = [
+                'id' => $category->id,
+                'name' => $prefix . $category->name,
+            ];
+
+            if ($category->childrenRecursive->count()) {
+                $options = array_merge(
+                    $options,
+                    self::getCategoryOptions($category->childrenRecursive, $prefix . '— ', $excludeId)
+                );
+            }
+        }
+
+        return $options;
     }
 }

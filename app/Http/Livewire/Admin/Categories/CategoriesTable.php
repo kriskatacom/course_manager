@@ -41,7 +41,7 @@ class CategoriesTable extends Component
 
     public function restore($categoryId)
     {
-        $category = Category::onlyTrashed()->find($categoryId);
+        $category = Category::withTrashed()->find($categoryId);
 
         if ($category) {
             $category->restore();
@@ -60,7 +60,7 @@ class CategoriesTable extends Component
 
     public function deletePermanently($categoryId)
     {
-        $category = Category::onlyTrashed()->find($categoryId);
+        $category = Category::withTrashed()->find($categoryId);
 
         if ($category) {
             if ($category->children()->withTrashed()->exists()) {

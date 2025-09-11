@@ -14,7 +14,7 @@
                 </div>
 
                 @php
-                    $categories = $this->getCategoryOptions(null, '', $this->category?->id);
+                    $categories = \App\Models\Category::getCategoryOptions(null, '', $this->category?->id);
                 @endphp
 
                 @if (count($categories) > 0)
@@ -52,7 +52,7 @@
             </div>
 
             <div class="space-x-5 flex items-center">
-                <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="save">
+                <x-button-loading type="submit" icon="fas fa-save" target="save">
                     {{ __('messages.save_changes') }}
                 </x-button-loading>
                 <a href="{{ route("admin.categories.index") }}" class="page-link">

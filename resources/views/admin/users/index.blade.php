@@ -16,7 +16,9 @@
                         <span>({{ format_number($usersCount) }})</span>
                     </h1>
                     <div>
-                        <a href="{{ route("admin.users.create", 0) }}" title="{{ __("messages.create_new_user") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                        <x-link href="{{ route('admin.users.create', 0) }}" :title="__('messages.create_new_user')" icon="fa-plus" variant="primary">
+                            {{ __('messages.create') }}
+                        </x-link>
                     </div>
                 </div>
             </div>

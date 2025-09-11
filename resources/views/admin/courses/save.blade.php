@@ -15,7 +15,9 @@
                 </h1>
 
                 <div>
-                    <a href="{{ route("admin.courses.save", 0) }}" title="{{ __("messages.create_new_category") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                    <x-link href="{{ route('admin.courses.save', 0) }}" :title="__('messages.create_new_course')" icon="fa-plus" variant="primary">
+                        {{ __('messages.create') }}
+                    </x-link>
                 </div>
             </div>
 

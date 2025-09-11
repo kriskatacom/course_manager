@@ -13,7 +13,6 @@ class SaveCourse extends Component
     public $discount_price;
     public $duration = 90;
     public Course $course;
-    public $categories;
 
     protected $listeners = ["deleted" => "handleDeleted"];
 
@@ -75,8 +74,6 @@ class SaveCourse extends Component
 
     public function mount($courseId = null)
     {
-        $this->categories = Category::all();
-
         if ($courseId) {
             $this->course = Course::find($courseId);
             $this->discount_price = $this->course?->discount_price;

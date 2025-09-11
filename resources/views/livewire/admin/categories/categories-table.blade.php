@@ -18,7 +18,9 @@
                 <span>({{ format_number($categoriesCount) }})</span>
             </h1>
             <div>
-                <a href="{{ route("admin.categories.edit", 0) }}" title="{{ __("messages.create_new_category") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+                <x-link href="{{ route('admin.categories.edit', 0) }}" :title="__('messages.create_new_category')" icon="fa-plus" variant="primary">
+                    {{ __('messages.create') }}
+                </x-link>
             </div>
         </div>
     </div>
@@ -47,9 +49,9 @@
 
     <div class="overflow-x-auto">
         <ul>
-            @if ($categories->count() > 0)
+            @if (count($categories) > 0)
                 <div class="px-5 space-y-2">
-                    @foreach($categories->where('parent_id', null) as $category)
+                    @foreach(collect($categories)->where('parent_id', null) as $category)
                         @include('livewire.admin.categories.category-children', ['category' => $category, 'level' => 0])
                     @endforeach
                 </div>

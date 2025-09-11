@@ -106,30 +106,4 @@ class EditCategory extends Component
             return redirect()->route("admin.categories.edit", $this->category->id);
         }
     }
-
-    public function getCategoryOptions($categories = null, $prefix = '', $excludeId = null)
-    {
-        $categories = $categories ?? Category::whereNull('parent_id')->orderBy('name')->get();
-        $options = [];
-
-        foreach ($categories as $category) {
-            if ($excludeId && $category->id == $excludeId) {
-                continue;
-            }
-
-            $options[] = [
-                'id' => $category->id,
-                'name' => $prefix . $category->name,
-            ];
-
-            if ($category->childrenRecursive->count()) {
-                $options = array_merge(
-                    $options,
-                    $this->getCategoryOptions($category->childrenRecursive, $prefix . '- ', $excludeId)
-                );
-            }
-        }
-
-        return $options;
-    }
 }

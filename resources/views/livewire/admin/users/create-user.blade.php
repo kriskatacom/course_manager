@@ -36,7 +36,7 @@
             @enderror
 
             <div class="space-x-5 flex items-center">
-                <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="create">
+                <x-button-loading type="submit" icon="fas fa-save" target="create">
                     {{ __('messages.save_changes') }}
                 </x-button-loading>
                 <a href="{{ route("admin.users.index") }}" class="page-link">

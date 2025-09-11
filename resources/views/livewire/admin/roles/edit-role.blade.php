@@ -16,7 +16,7 @@
             </div>
 
             <div class="space-x-5 flex items-center">
-                <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="save">
+                <x-button-loading type="submit" icon="fas fa-save" target="save">
                     {{ __('messages.save_changes') }}
                 </x-button-loading>
                 <a href="{{ route("admin.roles.index") }}" class="page-link">
@@ -46,7 +46,7 @@
                 @enderror
 
                 <div class="space-x-5 flex items-center">
-                    <x-button-loading type="submit" icon="fas fa-sign-in-alt" target="savePermissions">
+                    <x-button-loading type="submit" icon="fas fa-save" target="savePermissions">
                         {{ __('messages.save_changes') }}
                     </x-button-loading>
                     <a href="{{ route("admin.roles.index") }}" class="page-link">

@@ -33,11 +33,9 @@
                 @endforeach
             </div>
             <div class="flex items-center gap-5">
-                <a href="{{ route("admin.courses.save", 0) }}" title="{{ __("messages.create_new_course") }}"
-                    class="block btn-primary">
-                    <i class="fa-solid fa-plus"></i>
-                    {{ __("messages.create") }}
-                </a>
+                <x-link href="{{ route('admin.courses.save', 0) }}" :title="__('messages.create_new_course')" icon="fa-plus" variant="primary">
+                    {{ __('messages.create') }}
+                </x-link>
             </div>
         </div>
     </div>
@@ -95,7 +93,7 @@
                             </td>
                             <td class="px-6 py-4 border-b">{{ $course->created_at->diffForHumans() }}</td>
                             <td class="px-6 py-4 border-b">
-                                @if ($course->status != \App\Models\Course::STATUS_DELETED)
+                                @if ($course->status != \App\Models\Course::STATUS_DELETED && !$course->deleted_at)
                                     <a href="{{ route('admin.courses.save', $course->id) }}" class="text-blue-600 hover:underline">
                                         {{ __('messages.edit') }}
                                     </a>
