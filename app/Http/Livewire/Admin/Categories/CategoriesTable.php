@@ -79,6 +79,20 @@ class CategoriesTable extends Component
         }
     }
 
+    protected function countRecursive($categories)
+    {
+        $count = 0;
+
+        foreach ($categories as $category) {
+            $count++;
+            if ($category->childrenRecursive->isNotEmpty()) {
+                $count += $this->countRecursive($category->childrenRecursive);
+            }
+        }
+
+        return $count;
+    }
+
     public function render()
     {
         $categories = Category::query()
@@ -94,9 +108,7 @@ class CategoriesTable extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $categoriesCount = $this->status === 'deleted'
-            ? Category::onlyTrashed()->count()
-            : Category::where("status", $this->status)->count();
+        $categoriesCount = $this->countRecursive($categories);
 
         return view('livewire.admin.categories.categories-table', [
             'categories' => $categories,
