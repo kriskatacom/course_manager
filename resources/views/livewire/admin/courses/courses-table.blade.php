@@ -1,12 +1,43 @@
 <div>
+    @php
+        $statuses = \App\Models\Course::STATUSES;
+        $statusIcons = [
+            'draft' => 'fas fa-pencil-alt',
+            'published' => 'fas fa-check-circle',
+            'archived' => 'fas fa-archive',
+            'deleted' => 'fas fa-trash-alt',
+        ];
+    @endphp
+
     <div class="border border-gray-200">
         <div class="flex justify-between items-center gap-5 p-5">
-            <h1 class="text-2xl font-extrabold">
-                <span>{{ __('messages.courses') }}</span>
-                <span>({{ format_number($coursesCount) }})</span>
-            </h1>
-            <div>
-                <a href="{{ route("admin.courses.save", 0) }}" title="{{ __("messages.create_new_course") }}" class="block btn-primary">{{ __("messages.create") }}</a>
+            <div class="flex justify-between items-center gap-5">
+                <h1 class="text-2xl font-extrabold">
+                    <span>{{ __('messages.courses') }}</span>
+                    <span>({{ format_number($coursesCount) }})</span>
+                </h1>
+                @foreach($statuses as $statusItem)
+                    <button wire:click.prevent="$set('status', '{{ $statusItem }}')"
+                        class="relative flex items-center space-x-2 border border-gray-200 rounded py-2 px-4 hover:text-white hover:bg-primary {{ $status === $statusItem ? 'text-white bg-primary' : '' }}">
+                        <span class="flex items-center space-x-2" wire:loading.remove
+                            wire:target="$set('status', '{{ $statusItem }}')">
+                            <i class="{{ $statusIcons[$statusItem] ?? 'fas fa-tag' }}"></i>
+                            <span>{{ __("messages.$statusItem") }}</span>
+                        </span>
+                        <span class="flex items-center space-x-2" wire:loading
+                            wire:target="$set('status', '{{ $statusItem }}')">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>{{ __("messages.$statusItem") }}</span>
+                        </span>
+                    </button>
+                @endforeach
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="{{ route("admin.courses.save", 0) }}" title="{{ __("messages.create_new_course") }}"
+                    class="block btn-primary">
+                    <i class="fa-solid fa-plus"></i>
+                    {{ __("messages.create") }}
+                </a>
             </div>
         </div>
     </div>
@@ -57,19 +88,27 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 border-b">
-                                <span class="inline-block {{ \App\Models\Course::STATUS_COLORS[$course->status] ?? 'bg-gray-600 text-gray-100' }} px-2 py-1 rounded mr-1">
+                                <span
+                                    class="inline-block {{ \App\Models\Course::STATUS_COLORS[$course->status] ?? 'bg-gray-600 text-gray-100' }} px-2 py-1 rounded mr-1">
                                     {{ __("messages.$course->status") }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 border-b">{{ $course->created_at->diffForHumans() }}</td>
                             <td class="px-6 py-4 border-b">
-                                <a href="{{ route('admin.courses.save', $course->id) }}" class="text-blue-600 hover:underline">
-                                    {{ __('messages.edit') }}
-                                </a>
-                                <button class="text-red-600 ml-2"
-                                    wire:click="$emit('openModal', {{ $course->id }}, '{{ addslashes(\App\Models\Course::class) }}')">
-                                    {{ __('messages.delete') }}
-                                </button>
+                                @if ($course->status != \App\Models\Course::STATUS_DELETED)
+                                    <a href="{{ route('admin.courses.save', $course->id) }}" class="text-blue-600 hover:underline">
+                                        {{ __('messages.edit') }}
+                                    </a>
+                                    <button class="text-red-600 ml-2"
+                                        wire:click="$emit('openModal', {{ $course->id }}, '{{ addslashes(\App\Models\Course::class) }}')">
+                                        {{ __('messages.delete') }}
+                                    </button>
+                                @else
+                                    <div class="flex items-center gap-5">
+                                        <button wire:click="restore({{ $course->id }})" class="text-green-600">{{ __("messages.recovery") }}</button>
+                                        <button wire:click="deletePermanently({{ $course->id }})" class="text-red-600">{{ __("messages.delete_permanently") }}</button>
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -78,7 +117,8 @@
                         <div class="flex flex-col justify-center items-center gap-5 h-32">
                             <i class="fa-solid fa-graduation-cap text-6xl text-gray-600"></i>
                             <span>{{ __("messages.no_courses_found") }}</span>
-                            <a href="{{ route("admin.courses.save", 0) }}" class="btn-primary">{{ __("messages.create") }}</a>
+                            <a href="{{ route("admin.courses.save", 0) }}"
+                                class="btn-primary">{{ __("messages.create") }}</a>
                         </div>
                     </td>
                 @endif

@@ -15,7 +15,7 @@
 }
 
 .page-icon-button {
-    @apply border border-gray-200 hover:border-primary rounded p-2 flex justify-center items-center hover:text-white hover:bg-primary;
+    @apply border border-gray-200 hover:border-primary rounded p-3 flex justify-center items-center hover:text-white hover:bg-primary;
 }
 
 .page-link {

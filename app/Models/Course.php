@@ -40,20 +40,33 @@ class Course extends Model
         'draft',
         'published',
         'archived',
+        'deleted',
     ];
 
     public const STATUS_COLORS = [
         'draft' => 'bg-gray-600 text-gray-100',
         'published' => 'bg-green-600 text-gray-100',
         'archived' => 'bg-yellow-600 text-gray-100',
+        'deleted' => 'bg-red-600 text-gray-100',
     ];
 
     public const STATUS_DRAFT     = "draft";
     public const STATUS_PUBLISHED = "published";
     public const STATUS_ARCHIVED  = "archived";
+    public const STATUS_DELETED  = "deleted";
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($course) {
+            if (! $course->isForceDeleting()) {
+                $course->status = Course::STATUS_DELETED;
+                $course->saveQuietly();
+            }
+        });
     }
 }

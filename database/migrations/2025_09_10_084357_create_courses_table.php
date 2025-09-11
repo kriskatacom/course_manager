@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal("price", 8, 2)->nullable()->default(null);
             $table->boolean("is_free")->default(false);
             $table->decimal("discount_price", 8, 2)->nullable();
-            $table->enum("status", ["draft", "published", "archived"])->default("draft");
+            $table->enum("status", ["draft", "published", "archived", "deleted"])->default("draft");
             $table->json("meta")->nullable();
             $table->timestamps();
             $table->softDeletes();

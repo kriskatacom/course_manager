@@ -13,7 +13,12 @@ class CoursesTable extends Component
 
     public $search = "";
     public $perPage = 10;
+    public $status = null;
     protected $listeners = ["deleted" => "handleDeleted"];
+
+    protected $queryString = [
+        'status' => ['except' => null],
+    ];
 
     public function handleDeleted()
     {
@@ -25,29 +30,82 @@ class CoursesTable extends Component
         ]);
     }
 
+    public function setStatusFilter($status)
+    {
+        $this->status = $status;
+        $this->resetPage();
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
+    public function restore($courseId)
+    {
+        $course = Course::onlyTrashed()->find($courseId);
+
+        if ($course) {
+            $course->restore();
+            $course->status = 'archived';
+            $course->saveQuietly();
+
+            $this->dispatchBrowserEvent('flash-message', [
+                'message' => __("messages.course_restored"),
+                'type' => 'success',
+                'timeout' => 6000
+            ]);
+
+            $this->resetPage();
+        }
+    }
+
+    public function deletePermanently($courseId)
+    {
+        $course = Course::onlyTrashed()->find($courseId);
+
+        if ($course) {
+            $course->forceDelete();
+
+            $this->dispatchBrowserEvent('flash-message', [
+                'message' => __("messages.course_deleted_successfully"),
+                'type' => 'success',
+                'timeout' => 3000
+            ]);
+        }
+    }
+
     public function render()
     {
-        $query = Course::with("category")
-            ->orderBy("id", "desc");
+        $query = Course::with('category');
+
+        if ($this->status === 'deleted') {
+            $query->onlyTrashed();
+        } elseif ($this->status) {
+            $query->where('status', $this->status);
+        }
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where("title", "like", "%{$this->search}%")
-                  ->orWhere("description", "like", "%{$this->search}%");
+                $q->where('title', 'like', "%{$this->search}%")
+                    ->orWhere('description', 'like', "%{$this->search}%");
             });
         }
 
-        $courses = $query->paginate($this->perPage);
-        $coursesCount = Course::count();
+        $courses = $query->orderBy('id', 'desc')
+            ->paginate($this->perPage);
 
-        return view("livewire.admin.courses.courses-table", [
-            "courses" => $courses,
-            "coursesCount" => $coursesCount,
+        if ($this->status === Course::STATUS_DELETED) {
+            $coursesCount = Course::onlyTrashed()->count();
+        } else if ($this->status) {
+            $coursesCount = Course::where("status", $this->status)->count();
+        } else {
+            $coursesCount = Course::count();
+        }
+
+        return view('livewire.admin.courses.courses-table', [
+            'courses' => $courses,
+            'coursesCount' => $coursesCount,
         ]);
     }
 }
