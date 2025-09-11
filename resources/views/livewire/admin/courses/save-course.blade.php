@@ -5,39 +5,30 @@
         <div class="space-y-5 p-5">
 
             <!-- Основна информация -->
-            <h3 class="text-2xl font-semibold">{{ __("messages.deneral_information") }}</h3>
+            <h3 class="text-2xl font-semibold">{{ __("messages.general_information") }}</h3>
             <div>
                 <label for="title" class="form-label">{{ __("messages.course_title") }}</label>
-                <input type="text" wire:model.defer="course.title" class="form-control"
-                    placeholder="{{ __("messages.enter_course_title") }}" wire:loading.attr="disabled"
-                    wire:target="save">
+                <input type="text" wire:model.defer="course.title" class="form-control" placeholder="{{ __("messages.enter_course_title") }}" wire:loading.attr="disabled" wire:target="save">
                 @error('course.title') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
             <div>
                 <label for="short_description" class="form-label">{{ __("messages.short_description") }}</label>
-                <textarea wire:model.defer="course.short_description" id="short_description" class="form-control"
-                    rows="5" wire:loading.attr="disabled" wire:target="save"></textarea>
+                <textarea wire:model.defer="course.short_description" id="short_description" class="form-control" rows="5" wire:loading.attr="disabled" wire:target="save"></textarea>
                 @error('course.short_description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Цена -->
             <h3 class="text-2xl font-semibold">{{ __("messages.price") }}</h3>
-            @if (!$course->is_free)
                 <div>
                     <label for="price" class="form-label">{{ __("messages.course_price") }}</label>
-                    <input type="text" wire:model.defer="course.price" class="form-control"
-                        placeholder="{{ __("messages.enter_course_price") }}" wire:loading.attr="disabled"
-                        wire:target="save">
+                    <input type="text" wire:model.defer="course.price" class="form-control" placeholder="{{ __("messages.enter_course_price") }}" wire:loading.attr="disabled" wire:target="save" @disabled($course->is_free)>
                     @error('course.price') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
                 <div>
                     <label for="discount_price" class="form-label">{{ __("messages.course_discount_price") }}</label>
-                    <input type="text" wire:model.defer="discount_price" class="form-control"
-                        placeholder="{{ __("messages.enter_course_discount_price") }}" wire:loading.attr="disabled"
-                        wire:target="save">
+                    <input type="text" wire:model.defer="discount_price" class="form-control" placeholder="{{ __("messages.enter_course_discount_price") }}" wire:loading.attr="disabled" wire:target="save" @disabled($course->is_free)>
                     @error('discount_price') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
-            @endif
             <div class="roles-container">
                 <label class="role-checkbox">
                     <input type="checkbox" wire:model="course.is_free" value="1">
@@ -61,6 +52,8 @@
                     </select>
                     @error('course.category_id') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                 </div>
+            @else
+                <div class="p-5 border border-gray-200 rounded bg-gray-100">{{ __("messages.no_categories_found") }}</div>
             @endif
 
             <!-- Описание -->
@@ -78,9 +71,7 @@
                 <div class="space-y-5">
                     <div>
                         <label for="duration" class="form-label">{{ __("messages.course_duration_in_minutes") }}</label>
-                        <input type="text" wire:model.defer="duration" class="form-control"
-                            placeholder="{{ __("messages.enter_course_duration") }}" wire:loading.attr="disabled"
-                            wire:target="save">
+                        <input type="text" wire:model.defer="duration" class="form-control" placeholder="{{ __("messages.enter_course_duration") }}" wire:loading.attr="disabled" wire:target="save">
                         @error('duration') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
                     </div>
 

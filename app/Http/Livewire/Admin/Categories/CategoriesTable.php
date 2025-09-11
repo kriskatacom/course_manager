@@ -20,19 +20,18 @@ class CategoriesTable extends Component
 
     public function handleDeleted()
     {
-        session()->flash('success', 'Записът беше изтрит успешно!');
-        $this->resetPage();
-
         $this->dispatchBrowserEvent('flash-message', [
             'message' => __("messages.category_move_trash"),
             'type' => 'success',
             'timeout' => 3000
         ]);
+        $this->resetPage();
     }
 
     public function setStatusFilter($status)
     {
         $this->status = $status;
+        $this->resetPage();
     }
 
     public function updatingSearch()
@@ -54,6 +53,8 @@ class CategoriesTable extends Component
                 'type' => 'success',
                 'timeout' => 6000
             ]);
+
+            $this->resetPage();
         }
     }
 
@@ -93,11 +94,13 @@ class CategoriesTable extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $categoriesCount = Category::count();
+        $categoriesCount = $this->status === 'deleted'
+            ? Category::onlyTrashed()->count()
+            : Category::where("status", $this->status)->count();
 
-        return view("livewire.admin.categories.categories-table", [
-            "categories" => $categories,
-            "categoriesCount" => $categoriesCount,
+        return view('livewire.admin.categories.categories-table', [
+            'categories' => $categories,
+            'categoriesCount' => $categoriesCount,
         ]);
     }
 }

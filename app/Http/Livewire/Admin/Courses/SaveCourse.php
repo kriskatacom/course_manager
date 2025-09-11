@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class SaveCourse extends Component
 {
     public $discount_price;
-    public $duration;
+    public $duration = 90;
     public Course $course;
     public $categories;
 
@@ -19,7 +19,7 @@ class SaveCourse extends Component
 
     public function handleDeleted()
     {
-        return redirect()->route("admin.courses.index")->with("success", __("messages.course_deleted_successfully"));
+        return redirect()->route("admin.courses.index")->with("success", __("messages.course_move_trash"));
     }
 
     protected function messages()
@@ -90,6 +90,7 @@ class SaveCourse extends Component
             $this->course = new Course();
             $this->course->status = "draft";
             $this->course->duration = $this->duration;
+            $this->course->is_free = 0;
         }
     }
 
@@ -100,6 +101,7 @@ class SaveCourse extends Component
         $this->course->slug = Str::slug($this->course->title);
         $this->course->category_id = $this->course->category_id ?: null;
         $this->course->discount_price = $this->discount_price ?: null;
+        $this->course->duration = $this->duration;
 
         $this->course->save();
 

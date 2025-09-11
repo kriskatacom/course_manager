@@ -16,6 +16,13 @@ class EditCategory extends Component
     public $parent_id = null;
     public $status = "draft";
 
+    protected $listeners = ["deleted" => "handleDeleted"];
+
+    public function handleDeleted()
+    {
+        return redirect()->route("admin.categories.index")->with("success", __("messages.category_move_trash"));
+    }
+
     public function messages()
     {
         return [
@@ -38,6 +45,8 @@ class EditCategory extends Component
             $this->parent_id = $this->category->parent_id;
             $this->description = $this->category->description;
             $this->status = $this->category->status;
+        } else {
+            $this->category = new Category();
         }
     }
 
@@ -70,7 +79,7 @@ class EditCategory extends Component
 
         $this->parent_id = $this->parent_id ?: null;
 
-        if ($this->category) {
+        if ($this->category->id) {
             $this->category->update([
                 "name" => $this->name,
                 "slug" => $slug,
@@ -79,7 +88,11 @@ class EditCategory extends Component
                 "status"=> $this->status,
             ]);
 
-            $this->emit('flash', __("messages.saved_changes"), 'success');
+                $this->dispatchBrowserEvent('flash-message', [
+                    'message' => __("messages.saved_changes"),
+                    'type' => 'success',
+                    'timeout' => 3000
+                ]);
         } else {
             $this->category = Category::create([
                 "name" => $this->name,

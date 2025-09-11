@@ -23,6 +23,7 @@
         </div>
     </div>
 
+    <x-alert-messages />
     <livewire:components.flash-message />
 
     <div class="m-5 flex items-center gap-2">
